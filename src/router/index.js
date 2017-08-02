@@ -1,0 +1,30 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+import Home from '@/components/home/Home'
+
+Vue.use(Router)
+
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'Home',
+      component: Home
+    },
+    {
+      path: '/good'
+    },
+    {
+      path: '/share'
+    },
+    {
+      path: '/ask'
+    },
+    {
+      path: '/job'
+    },
+    {
+      path: '/dev'
+    }
+  ]
+})
