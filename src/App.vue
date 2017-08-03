@@ -6,10 +6,15 @@
 </template>
 
 <script>
-import vHeader from './components/header/header'
+import vHeader from 'components/header/header'
+import { _Ajax } from 'common/js/_Ajax.js'
 
 export default {
   name: 'app',
+  created () {
+    console.log(this.$route.path)
+    _Ajax(this, 'good')
+  },
   components: {
     vHeader
   }

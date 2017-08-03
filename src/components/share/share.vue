@@ -1,5 +1,5 @@
 <template>
-  <div class="home" ref="home">
+  <div class="share" ref="home">
     <div class="list">
       <topics :topics="topics"></topics>
     </div>
