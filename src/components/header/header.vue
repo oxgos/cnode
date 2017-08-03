@@ -1,8 +1,8 @@
 <template>
   <div class="header">
 	<div class="title">
-		<span class="menu"></span>
-		<img src="static/img/cnodejs_light.svg" alt="" width="120" height="28">
+		<div class="menu"></div>
+		<h1><img src="static/img/cnodejs_light.svg" alt="" width="120" height="28"></h1>
 	</div>
 	<div class="nav">
 		<ul class="nav-wrapper">

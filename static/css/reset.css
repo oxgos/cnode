@@ -1,5 +1,6 @@
 html,
 body,
+img,
 ul,
 h1,
 h2,
@@ -13,9 +14,18 @@ h6 {
 body {
 	font-family: "Helvetica Neue","Luxi Sans","DejaVu Sans",Tahoma,"Hiragino Sans GB",STHeiti,sans-serif!important;
 }
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
 ul,
 ol {
 	list-style: none;
+}
+img {
+	border: none;
 }
 a {
 	text-decoration: none;
