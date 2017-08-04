@@ -6,6 +6,6 @@ export function _Ajax (vm, tab) {
     }
   })
   .then((res) => {
-    console.log(res.data.data)
+    // console.log(res.data.data)
   })
 }

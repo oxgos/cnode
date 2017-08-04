@@ -32,17 +32,52 @@ export default {
     })
       .then((res) => {
         this.topics = res.data.data
-        /* this.topics.forEach((item) => {
-          this.authors.push(item.author)
-          this.tabs.push(item.tab)
-          this.tops.push(item.top)
-          this.good.push(item.good)
-          this.titles.push(item.title)
-          this.creates_at.push(item.create_at)
-          this.lasts_reply_at.push(item.last_reply_at)
-        }) */
+        // DOM元素渲染完后,创建滚动
         this.$nextTick(() => {
-          this.homeScroll = new BScroll(this.$refs.home, {})
+          let homeScroll = new BScroll(this.$refs.home, {
+            probeType: 1
+          })
+          // 下拉时更新数据
+          homeScroll.on('touchend', (pos) => {
+            if (pos.y >= 40) {
+              setTimeout(() => {
+                this.$ajax.get('https://cnodejs.org/api/v1/topics', {
+                  params: {
+                    limit: limit
+                  }
+                })
+                .then((res) => {
+                  this.topics = res.data.data
+                  this.$nextTick(() => {
+                    homeScroll.refresh()
+                  })
+                })
+              }, 1000)
+            } else if (pos.y < homeScroll.maxScrollY + 10) {
+              setTimeout(() => {
+                let up = 20
+                up += 10
+                this.$ajax.get('https://cnodejs.org/api/v1/topics', {
+                  params: {
+                    limit: up
+                  }
+                })
+                .then((res) => {
+                  let j = 0
+                  res.data.data.forEach((i) => {
+                    j++
+                    if (j > up - 10) {
+                      this.topics.push(i)
+                    }
+                  })
+                  // this.topics = res.data.data
+                  this.$nextTick(() => {
+                    homeScroll.refresh()
+                  })
+                })
+              }, 1000)
+            }
+          })
         })
       })
   },

@@ -14,7 +14,6 @@ import { _Ajax } from 'common/js/_Ajax.js'
 export default {
   name: 'app',
   created () {
-    console.log(this.$route.path)
     _Ajax(this, 'good')
   },
   components: {
