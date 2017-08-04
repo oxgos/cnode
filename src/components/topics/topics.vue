@@ -1,25 +1,33 @@
 <template>
-  <ul class="topics">
-    <li class="line" v-for="item in topics">
-     <div class="header">
-        <span class="tab" :class="{'good': item.top || item.good}">{{ classify(item.top, item.good, item.tab) }}</span>
-        <span class="title">{{ item.title }}</span>
-     </div>
-     <div class="detail">
-        <div class="avatar">
-          <img :src="item.author.avatar_url" alt="" width="32" height="32">
-        </div>
-        <div class="info">
-          <h5 class="author">{{ item.author.loginname }}</h5>
-          <p class="time">创建时间: {{ createTime(item.create_at) }}</p>
-        </div>
-        <div class="reply">
-	        <p><span class="reply_count">{{ item.reply_count }}</span>/{{ item.visit_count }}</p>
-          <p class="ago">{{ agoTime(item.last_reply_at) }}</p>
-        </div>
-     </div>
-    </li>
-  </ul>
+  <div>
+    <div class="top-tip">
+      <span class="refresh-hook">下拉刷新</span>
+    </div>
+    <ul class="topics">
+      <li class="line" v-for="item in topics">
+       <div class="header">
+          <span class="tab" :class="{'good': item.top || item.good}">{{ classify(item.top, item.good, item.tab) }}</span>
+          <span class="title">{{ item.title }}</span>
+       </div>
+       <div class="detail">
+          <div class="avatar">
+            <img :src="item.author.avatar_url" alt="" width="32" height="32">
+          </div>
+          <div class="info">
+            <h5 class="author">{{ item.author.loginname }}</h5>
+            <p class="time">创建时间: {{ createTime(item.create_at) }}</p>
+          </div>
+          <div class="reply">
+            <p><span class="reply_count">{{ item.reply_count }}</span>/{{ item.visit_count }}</p>
+            <p class="ago">{{ agoTime(item.last_reply_at) }}</p>
+          </div>
+       </div>
+      </li>
+    </ul>
+    <div class="bottom-tip">
+      <span class="loading-hook">加载更多</span>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -59,12 +67,15 @@ export default {
       let now = new Date()
       now = now.getTime()
       let oneDay = 24 * 3600 * 1000
-      if (now - ago > oneDay) {
+      if (now - ago >= oneDay) {
         let count = Math.round((now - ago) / oneDay)
         return count + '天前'
-      } else {
+      } else if (now - ago >= 3600000 && (now - ago < oneDay)) {
         let count = (now - ago) / 1000 / 3600
         return Math.round(count) + '小时前'
+      } else {
+        let count = (now - ago) / 1000 / 60
+        return Math.round(count) + '分钟前'
       }
     }
   }

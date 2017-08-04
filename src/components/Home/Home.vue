@@ -1,14 +1,14 @@
 <template>
   <div class="home" ref="home">
-    <div class="list">
-      <topics :topics="topics"></topics>
-    </div>
+    <topics :topics="topics"></topics>
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
 import topics from 'components/topics/topics'
+
+const limit = 20// 数据条数
 
 export default {
   name: 'home',
@@ -27,7 +27,7 @@ export default {
   created () {
     this.$ajax.get('https://cnodejs.org/api/v1/topics', {
       params: {
-        limit: 50
+        limit: limit
       }
     })
       .then((res) => {
