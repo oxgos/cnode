@@ -9,13 +9,9 @@
 
 <script>
 import vHeader from 'components/header/header'
-import { _Ajax } from 'common/js/_Ajax.js'
 
 export default {
   name: 'app',
-  created () {
-    _Ajax(this, 'good')
-  },
   components: {
     vHeader
   }

@@ -12,7 +12,7 @@
       <li class="line" v-for="item in topics">
        <div class="header">
           <span class="tab" :class="{'good': item.top || item.good}">{{ classify(item.top, item.good, item.tab) }}</span>
-          <span class="title">{{ item.title }}</span>
+          <span class="title" @click="showDetail(item.id)">{{ item.title }}</span>
        </div>
        <div class="detail">
           <div class="avatar">
@@ -52,6 +52,13 @@ export default {
     ])
   },
   methods: {
+    showDetail (id) {
+      console.log(id)
+      this.$ajax.get('https://cnodejs.org/api/v1/topic/' + id)
+        .then((res) => {
+          console.log(res.data.data)
+        })
+    },
     // 帖子分类
     classify (top, good, tab) {
       if (top) {
@@ -65,6 +72,10 @@ export default {
               return '分享'
             case 'ask':
               return '问答'
+            case 'job':
+              return '招聘'
+            case 'dev':
+              return '测试'
           }
         }
       }

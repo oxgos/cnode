@@ -33,7 +33,8 @@ export default {
         // DOM元素渲染完后,创建滚动
         this.$nextTick(() => {
           let homeScroll = new BScroll(this.$refs.home, {
-            probeType: 1
+            probeType: 1,
+            click: true
           })
           // 下拉时更新数据
           homeScroll.on('touchend', (pos) => {

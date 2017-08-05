@@ -3,6 +3,9 @@ import Router from 'vue-router'
 import Home from '@/components/home/Home'
 import share from '@/components/share/share'
 import good from '@/components/good/good'
+import ask from '@/components/ask/ask'
+import job from '@/components/job/job'
+import dev from '@/components/dev/dev'
 
 Vue.use(Router)
 
@@ -24,13 +27,19 @@ export default new Router({
       component: share
     },
     {
-      path: '/ask'
+      path: '/ask',
+      name: 'ask',
+      component: ask
     },
     {
-      path: '/job'
+      path: '/job',
+      name: 'job',
+      component: job
     },
     {
-      path: '/dev'
+      path: '/dev',
+      name: 'dev',
+      component: dev
     }
   ]
 })

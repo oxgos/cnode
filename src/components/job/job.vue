@@ -1,5 +1,5 @@
 <template>
-  <div class="share" ref="share">
+  <div class="job" ref="job">
     <topics :topics="topics"></topics>
   </div>
 </template>
@@ -10,7 +10,7 @@ import topics from 'components/topics/topics'
 import { dataAjax } from 'common/js/dataAjax'
 
 export default {
-  name: 'share',
+  name: 'job',
   data () {
     return {
       topics: [], // 页面所有数据
@@ -28,11 +28,11 @@ export default {
       .then((res) => {
         this.topics = res.data.data
         this.$nextTick(() => {
-          let share = new BScroll(this.$refs.share, {
+          let job = new BScroll(this.$refs.job, {
             probeType: 1,
             click: true
           })
-          dataAjax(share, this.tab, this)
+          dataAjax(job, this.tab, this)
         })
       })
   },
@@ -44,5 +44,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
-  @import './share.styl'
+  @import './job.styl'
 </style>
