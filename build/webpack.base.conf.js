@@ -25,6 +25,7 @@ module.exports = {
       '@': resolve('src'),
       'components': resolve('src/components'),
       'common': resolve('src/common'),
+      'static': resolve('static')
     }
   },
   module: {

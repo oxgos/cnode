@@ -6,11 +6,11 @@ import * as actions from './actions.js'
 Vue.use(Vuex)
 
 const state = {
-	'ajaxLoading': false
+  'ajaxLoading': false
 }
 
 export default new Vuex.Store({
-	state,
-	mutations,
-	actions
+  state,
+  mutations,
+  actions
 })

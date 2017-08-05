@@ -1,9 +1,24 @@
+.done-tip
+	position absolute
+	top 0
+	left 0
+	width 100%
+	text-align center
+	color #fff
+	background #e4393c
+	opacity .8
+	transform translate3d(0, 0, 0)
+	&.fade-enter-active, &.fade-leave-active
+		transition all .5s linear
+	&.fade-enter, &.fade-leave-active
+		transform translate3d(0, -20px, 0)	
 .top-tip
 	position absolute
 	top -30px
 	left 0
 	width 100%
 	text-align center
+	color #e4393c
 .topics
 	.line
 		padding 5px 10px
@@ -61,4 +76,10 @@
 						color #80bd01
 .bottom-tip
 	width 100%
-	text-align center						
+	padding 10px 0
+	text-align center
+	color #e4393c
+	img
+		vertical-align top
+	span
+		vertical-align top							

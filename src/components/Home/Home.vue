@@ -8,8 +8,6 @@
 import BScroll from 'better-scroll'
 import topics from 'components/topics/topics'
 
-const limit = 20// 数据条数
-
 export default {
   name: 'home',
   data () {
@@ -27,7 +25,7 @@ export default {
   created () {
     this.$ajax.get('https://cnodejs.org/api/v1/topics', {
       params: {
-        limit: limit
+        limit: 20
       }
     })
       .then((res) => {
@@ -43,34 +41,36 @@ export default {
               setTimeout(() => {
                 this.$ajax.get('https://cnodejs.org/api/v1/topics', {
                   params: {
-                    limit: limit
+                    limit: 20
                   }
                 })
                 .then((res) => {
+                  this.$store.dispatch('UPDATA_AJAXLOADING')
                   this.topics = res.data.data
+                  setTimeout(() => {
+                    this.$store.dispatch('UPDATA_AJAXLOADING')
+                  }, 1500)
                   this.$nextTick(() => {
                     homeScroll.refresh()
                   })
                 })
               }, 1000)
             } else if (pos.y < homeScroll.maxScrollY + 10) {
+              this.$store.dispatch('UPDATA_AJAXLOADING')
               setTimeout(() => {
-                let up = 20
-                up += 10
+                let count = 20
+                count += 10
                 this.$ajax.get('https://cnodejs.org/api/v1/topics', {
                   params: {
-                    limit: up
+                    limit: count
                   }
                 })
                 .then((res) => {
-                  let j = 0
-                  res.data.data.forEach((i) => {
-                    j++
-                    if (j > up - 10) {
-                      this.topics.push(i)
-                    }
-                  })
-                  // this.topics = res.data.data
+                  this.$store.dispatch('UPDATA_AJAXLOADING')
+                  // 加载更多数据放进已有数据里
+                  let arr = res.data.data.slice(count - 10)
+                  this.topics.push(...arr)
+                  // 列表数量更变，刷新滚动
                   this.$nextTick(() => {
                     homeScroll.refresh()
                   })

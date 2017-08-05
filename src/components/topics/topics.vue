@@ -1,5 +1,10 @@
 <template>
   <div>
+    <transition name="fade">
+      <div class="done-tip" v-show="ajaxLoading">
+        <span>刷新成功</span>
+      </div>
+    </transition>
     <div class="top-tip">
       <span class="refresh-hook">下拉刷新</span>
     </div>
@@ -25,18 +30,26 @@
       </li>
     </ul>
     <div class="bottom-tip">
+      <img src="static/img/loading_ajax.gif" v-show="ajaxLoading" alt="" width="20" height="20">
       <span class="loading-hook">加载更多</span>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'topics',
   props: {
     topics: {
       type: Array
     }
+  },
+  computed: {
+    ...mapState([
+      'ajaxLoading'
+    ])
   },
   methods: {
     // 帖子分类
