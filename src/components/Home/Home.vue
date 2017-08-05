@@ -25,6 +25,7 @@ export default {
   created () {
     this.$ajax.get('https://cnodejs.org/api/v1/topics', {
       params: {
+        tabs: null,
         limit: 20
       }
     })
@@ -47,9 +48,8 @@ export default {
                 .then((res) => {
                   this.$store.dispatch('UPDATA_AJAXLOADING')
                   this.topics = res.data.data
-                  setTimeout(() => {
-                    this.$store.dispatch('UPDATA_AJAXLOADING')
-                  }, 1500)
+                  // 等待1.5s后，提示框消失
+                  this.$store.dispatch('UPDATA_AJAXLOADING_ASYNC')
                   this.$nextTick(() => {
                     homeScroll.refresh()
                   })

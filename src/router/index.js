@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/home/Home'
+import share from '@/components/share/share'
 
 Vue.use(Router)
 
@@ -15,7 +16,9 @@ export default new Router({
       path: '/good'
     },
     {
-      path: '/share'
+      path: '/share',
+      name: 'share',
+      component: share
     },
     {
       path: '/ask'

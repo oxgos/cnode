@@ -1,8 +1,6 @@
 <template>
-  <div class="share" ref="home">
-    <div class="list">
-      <topics :topics="topics"></topics>
-    </div>
+  <div class="share" ref="share">
+    <topics :topics="topics"></topics>
   </div>
 </template>
 
@@ -11,7 +9,7 @@ import BScroll from 'better-scroll'
 import topics from 'components/topics/topics'
 
 export default {
-  name: 'home',
+  name: 'share',
   data () {
     return {
       topics: [] // 页面所有数据
@@ -27,7 +25,8 @@ export default {
   created () {
     this.$ajax.get('https://cnodejs.org/api/v1/topics', {
       params: {
-        limit: 50
+        tab: 'share',
+        limit: 20
       }
     })
       .then((res) => {
@@ -42,7 +41,7 @@ export default {
           this.lasts_reply_at.push(item.last_reply_at)
         }) */
         this.$nextTick(() => {
-          this.homeScroll = new BScroll(this.$refs.home, {})
+          this.share = new BScroll(this.$refs.share, {})
         })
       })
   },
@@ -54,5 +53,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
-  @import './Home.styl'
+  @import './share.styl'
 </style>
