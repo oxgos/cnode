@@ -7,12 +7,14 @@
 <script>
 import BScroll from 'better-scroll'
 import topics from 'components/topics/topics'
+import { dataAjax } from 'common/js/dataAjax'
 
 export default {
   name: 'share',
   data () {
     return {
-      topics: [] // 页面所有数据
+      topics: [], // 页面所有数据
+      tab: null
       /* authors: [], // 作者
       tabs: [], // 分类
       tops: [], // 是否顶置
@@ -23,6 +25,7 @@ export default {
     }
   },
   created () {
+    console.log(this.$route.path)
     this.$ajax.get('https://cnodejs.org/api/v1/topics', {
       params: {
         tab: 'share',
@@ -41,7 +44,10 @@ export default {
           this.lasts_reply_at.push(item.last_reply_at)
         }) */
         this.$nextTick(() => {
-          this.share = new BScroll(this.$refs.share, {})
+          let share = new BScroll(this.$refs.share, {
+            probeType: 1
+          })
+          /* dataAjax(share, ) */
         })
       })
   },

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/home/Home'
 import share from '@/components/share/share'
+import good from '@/components/good/good'
 
 Vue.use(Router)
 
@@ -13,7 +14,9 @@ export default new Router({
       component: Home
     },
     {
-      path: '/good'
+      path: '/good',
+      name: 'good',
+      component: good
     },
     {
       path: '/share',

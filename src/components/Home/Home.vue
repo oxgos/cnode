@@ -25,7 +25,6 @@ export default {
   created () {
     this.$ajax.get('https://cnodejs.org/api/v1/topics', {
       params: {
-        tabs: null,
         limit: 20
       }
     })
