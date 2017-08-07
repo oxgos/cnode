@@ -4,14 +4,39 @@
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
+    <div class="content" v-show="topicContent" v-html="topicContent" ref="content"></div>
+    <div class="back" @click="hideContent" v-show="topicContent">
+      <img src="static/img/back.svg" alt="" width="40" height="40">
+    </div>
   </div>
 </template>
 
 <script>
 import vHeader from 'components/header/header'
+import { mapState } from 'vuex'
+import BScroll from 'better-scroll'
 
 export default {
   name: 'app',
+  computed: {
+    ...mapState([
+      'topicContent'
+    ])
+  },
+  methods: {
+    hideContent () {
+      this.$store.dispatch('UPDATA_TOPICCONTENT', null)
+    }
+  },
+  watch: {
+    topicContent (newValue, oldValue) {
+      if (newValue) {
+        this.$nextTick(() => {
+          this.contentScroll = new BScroll(this.$refs.content, {})
+        })
+      }
+    }
+  },
   components: {
     vHeader
   }
@@ -23,4 +48,35 @@ export default {
   position relative
   width 100%
   height 100%
+  .back
+    position absolute
+    top 0
+    left 0
+    width 100%
+    height 40px
+    text-align left
+    line-height 40px
+    background #444
+    z-index 1200
+  .content
+    position absolute
+    top 40px
+    left 0
+    bottom 0
+    width 100%
+    background #fff
+    z-index 1100
+    .markdown-text
+      h1
+        font-size 20px
+        margin 5px 0
+        text-align center
+      h2
+        font-size 18px
+        margin 3px 0  
+      p
+        text-align justify
+        margin 5px 0
+      img
+        width 100%
 </style>

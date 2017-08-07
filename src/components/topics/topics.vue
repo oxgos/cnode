@@ -53,10 +53,9 @@ export default {
   },
   methods: {
     showDetail (id) {
-      console.log(id)
       this.$ajax.get('https://cnodejs.org/api/v1/topic/' + id)
         .then((res) => {
-          console.log(res.data.data)
+          this.$store.dispatch('UPDATA_TOPICCONTENT', res.data.data.content)
         })
     },
     // 帖子分类

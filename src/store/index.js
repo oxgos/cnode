@@ -6,7 +6,8 @@ import * as actions from './actions.js'
 Vue.use(Vuex)
 
 const state = {
-  'ajaxLoading': false
+  'ajaxLoading': false,
+  'topicContent': null
 }
 
 export default new Vuex.Store({
