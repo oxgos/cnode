@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     showDetail (id) {
-      this.$ajax.get('https://cnodejs.org/api/v1/topic/' + id)
+      this.$ajax.get(`https://cnodejs.org/api/v1/topic/${id}`)
         .then((res) => {
           this.$store.dispatch('UPDATA_TOPICCONTENT', res.data.data.content)
         })

@@ -9,7 +9,7 @@
     </transition>
     <transition name="fade">
       <div class="back" @click="hideContent" v-show="topicContent">
-        <img src="static/img/back.svg" alt="" width="40" height="40">
+        <img src="static/img/back.svg" alt="" width="30" height="30">
       </div>
     </transition>
   </div>
@@ -58,10 +58,12 @@ export default {
     left 0
     width 100%
     height 40px
+    padding-top 5px
     text-align left
     line-height 40px
     background #444
     z-index 1200
+    box-sizing border-box
     &.fade-enter-active, &fade-leave-active
       transition all .5s linear
     &.fade-enter, &.fade-leave-active

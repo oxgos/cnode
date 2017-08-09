@@ -17,7 +17,7 @@
 	<transition name="move">
 		<div class="menu-wrapper" v-show="showMenu">
 			<div class="avatar">
-				<figure>
+				<figure @click="login">
 					<img src="static/img/avatar.png" width="100" height="100" alt="">
 					<p>登陆/Login</p>
 				</figure>
@@ -50,6 +50,10 @@ export default {
   methods: {
     showM () {
       this.showMenu = !this.showMenu
+    },
+    login () {
+      this.showMenu = !this.showMenu
+      this.$router.push('/login')
     }
   }
 }

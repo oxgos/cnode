@@ -6,6 +6,7 @@ import good from '@/components/good/good'
 import ask from '@/components/ask/ask'
 import job from '@/components/job/job'
 import dev from '@/components/dev/dev'
+import login from '@/components/login/login'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/dev',
       name: 'dev',
       component: dev
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: login
     }
   ]
 })
