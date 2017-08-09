@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-	<div class="title">
+	<div class="title" @click="showM">
 		<div class="menu"></div>
 		<h1><img src="static/img/cnodejs_light.svg" alt="" width="120" height="28"></h1>
 	</div>
@@ -14,6 +14,20 @@
 			<li><router-link to="/dev" :class="{active: changeTab === '/dev'}">测试</router-link></li>
 		</ul>
 	</div>
+	<transition name="move">
+		<div class="menu-wrapper" v-show="showMenu">
+			<div class="avatar">
+				<figure>
+					<img src="static/img/avatar.png" width="100" height="100" alt="">
+					<p>登陆/Login</p>
+				</figure>
+			</div>
+			<ul>
+				<li class="menu-option" v-for="option in options">{{ option }}</li>
+			</ul>
+		</div>	
+	</transition>
+	<div class="mask" v-show="showMenu"></div>
   </div>
 </template>
 
@@ -22,13 +36,20 @@ export default {
   name: 'header',
   data () {
     return {
-      tab: null
+      tab: null,
+      options: ['我的消息', '关于'],
+      showMenu: false
     }
   },
   computed: {
     changeTab () {
       this.tab = this.$route.path
       return this.tab
+    }
+  },
+  methods: {
+    showM () {
+      this.showMenu = !this.showMenu
     }
   }
 }

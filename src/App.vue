@@ -4,10 +4,14 @@
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
-    <div class="content" v-show="topicContent" v-html="topicContent" ref="content"></div>
-    <div class="back" @click="hideContent" v-show="topicContent">
-      <img src="static/img/back.svg" alt="" width="40" height="40">
-    </div>
+    <transition name="move">
+      <div class="content" v-show="topicContent" v-html="topicContent" ref="content"></div>  
+    </transition>
+    <transition name="fade">
+      <div class="back" @click="hideContent" v-show="topicContent">
+        <img src="static/img/back.svg" alt="" width="40" height="40">
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -58,6 +62,10 @@ export default {
     line-height 40px
     background #444
     z-index 1200
+    &.fade-enter-active, &fade-leave-active
+      transition all .5s linear
+    &.fade-enter, &.fade-leave-active
+      opacity 0  
   .content
     position absolute
     top 40px
@@ -65,7 +73,12 @@ export default {
     bottom 0
     width 100%
     background #fff
+    transform translate3d(0, 0, 0)
     z-index 1100
+    &.move-enter-active, &.move-leave-active
+      transition all .5s ease-out
+    &.move-enter, &.move-leave-active
+      transform translate3d(100%, 0, 0)
     .markdown-text
       h1
         font-size 20px
@@ -79,4 +92,6 @@ export default {
         margin 5px 0
       img
         width 100%
+      code
+        white-space normal
 </style>
