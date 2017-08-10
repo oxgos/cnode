@@ -19,6 +19,7 @@
 import vHeader from 'components/header/header'
 import { mapState } from 'vuex'
 import BScroll from 'better-scroll'
+import { preloadImages } from 'common/js/preloadImages.js'
 
 export default {
   name: 'app',
@@ -35,7 +36,7 @@ export default {
   watch: {
     topicContent (newValue, oldValue) {
       if (newValue) {
-        this.$nextTick(() => {
+        preloadImages(newValue).done(() => {
           this.contentScroll = new BScroll(this.$refs.content, {})
         })
       }
