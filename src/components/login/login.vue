@@ -29,16 +29,8 @@ export default {
       this.$router.go(-1)
     },
     signIn () {
-      console.log(this.accesstoken)
-      this.$ajax.post('https://cnodejs.org/api/v1/accesstoken ', {
-        accesstoken: this.accesstoken
-      })
-      .then((res) => {
-        console.log(res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+      this.$store.dispatch('SET_TOKEN', this.accesstoken)
+      this.$router.push('/')
     }
   }
 }

@@ -18,8 +18,8 @@
 		<div class="menu-wrapper" v-show="showMenu">
 			<div class="avatar">
 				<figure @click="login">
-					<img src="static/img/avatar.png" width="100" height="100" alt="">
-					<p>登陆/Login</p>
+					<img :src="userAvatar?userAvatar:avatar" width="100" height="100" alt="">
+					<p>{{ loginName? loginName : '登陆/Login' }}</p>
 				</figure>
 			</div>
 			<ul>
@@ -32,20 +32,27 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'header',
   data () {
     return {
       tab: null,
       options: ['我的消息', '关于'],
-      showMenu: false
+      showMenu: false,
+      avatar: 'static/img/avatar.png'
     }
   },
   computed: {
     changeTab () {
       this.tab = this.$route.path
       return this.tab
-    }
+    },
+    ...mapState([
+      'userAvatar',
+      'loginName'
+    ])
   },
   methods: {
     showM () {
