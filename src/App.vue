@@ -19,7 +19,7 @@
 import vHeader from 'components/header/header'
 import { mapState } from 'vuex'
 import BScroll from 'better-scroll'
-import { preloadImages } from 'common/js/preloadImages.js'
+import { preloadImages } from 'common/js/preloadImages2.js'
 
 export default {
   name: 'app',
@@ -36,7 +36,8 @@ export default {
   watch: {
     topicContent (newValue, oldValue) {
       if (newValue) {
-        preloadImages(newValue).done(() => {
+        // 图片加载完成后,然后(then)再生成BScroll实例,确保高度完整
+        preloadImages(newValue).then(() => {
           this.contentScroll = new BScroll(this.$refs.content, {})
         })
       }
