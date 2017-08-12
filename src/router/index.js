@@ -1,12 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/home/Home'
+/* import Home from '@/components/home/Home'
 import share from '@/components/share/share'
 import good from '@/components/good/good'
 import ask from '@/components/ask/ask'
 import job from '@/components/job/job'
 import dev from '@/components/dev/dev'
 import login from '@/components/login/login'
+import topicDetail from '@/components/topicDetail/topicDetail' */
+
+const Home = resolve => require(['@/components/home/Home'], resolve)
+const share = resolve => require(['@/components/share/share'], resolve)
+const good = resolve => require(['@/components/good/good'], resolve)
+const ask = resolve => require(['@/components/ask/ask'], resolve)
+const job = resolve => require(['@/components/job/job'], resolve)
+const dev = resolve => require(['@/components/dev/dev'], resolve)
+const login = resolve => require(['@/components/login/login'], resolve)
+const topicDetail = resolve => require(['@/components/topicDetail/topicDetail'], resolve)
 
 Vue.use(Router)
 
@@ -46,6 +56,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: login
+    },
+    {
+      path: '/topicDetail/:id',
+      name: 'topicDetail',
+      component: topicDetail
     }
   ]
 })

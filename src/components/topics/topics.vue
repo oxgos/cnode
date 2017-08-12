@@ -53,10 +53,8 @@ export default {
   },
   methods: {
     showDetail (id) {
-      this.$ajax.get(`https://cnodejs.org/api/v1/topic/${id}`)
-        .then((res) => {
-          this.$store.dispatch('UPDATA_TOPICCONTENT', res.data.data.content)
-        })
+      this.$store.dispatch('UPDATA_HEADER')
+      this.$router.push(`/topicDetail/:${id}`)
     },
     // 帖子分类
     classify (top, good, tab) {

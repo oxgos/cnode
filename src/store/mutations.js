@@ -1,8 +1,8 @@
+export const UPDATA_HEADER = state => {
+	state.showHeader = !state.showHeader
+}
 export const UPDATA_AJAXLOADING = state => {
   state.ajaxLoading = !state.ajaxLoading
-}
-export const UPDATA_TOPICCONTENT = (state, val) => {
-  state.topicContent = val
 }
 export const SET_TOKEN = (state, token) => {
   state.token = token

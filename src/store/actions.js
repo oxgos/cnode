@@ -1,6 +1,8 @@
 import { setToken } from '../common/js/cookie.js'
 import fetch from '../common/js/fetch.js'
 
+export const UPDATA_HEADER = ({ commit }) => commit('UPDATA_HEADER')
+
 export const UPDATA_AJAXLOADING = ({ commit }) => commit('UPDATA_AJAXLOADING')
 
 export const UPDATA_AJAXLOADING_ASYNC = ({ commit }) => {
@@ -8,7 +10,6 @@ export const UPDATA_AJAXLOADING_ASYNC = ({ commit }) => {
     commit('UPDATA_AJAXLOADING')
   }, 1500)
 }
-export const UPDATA_TOPICCONTENT = ({ commit }, val) => commit('UPDATA_TOPICCONTENT', val)
 
 export const SET_TOKEN = ({ commit }, token) => {
   fetch.post('https://cnodejs.org/api/v1/accesstoken', {

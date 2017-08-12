@@ -8,8 +8,8 @@ import { getToken } from '../common/js/cookie.js'
 Vue.use(Vuex)
 
 const state = {
+  showHeader: true,
   ajaxLoading: false,
-  topicContent: null,
   token: getToken(),
   userAvatar: null,
   loginName: null

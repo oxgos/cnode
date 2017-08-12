@@ -14,8 +14,6 @@ router.beforeEach((to, from, next) => {
   if (store.getters.token) {
     store.dispatch('SET_TOKEN', store.getters.token)
   }
-  console.log(to.path)
-  console.log(from)
   next()
 })
 
