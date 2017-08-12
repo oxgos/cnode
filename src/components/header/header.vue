@@ -23,7 +23,9 @@
 				</figure>
 			</div>
 			<ul>
-				<li class="menu-option" v-for="option in options">{{ option }}</li>
+				<li class="menu-option">我的消息</li>
+        <li class="menu-option">关于</li>
+        <li class="menu-option" @click="logout">退出登陆</li>
 			</ul>
 		</div>	
 	</transition>
@@ -33,13 +35,13 @@
 
 <script>
 import { mapState } from 'vuex'
+import { removeToken } from 'common/js/cookie.js'
 
 export default {
   name: 'header',
   data () {
     return {
       tab: null,
-      options: ['我的消息', '关于'],
       showMenu: false,
       avatar: 'static/img/avatar.png'
     }
@@ -61,6 +63,11 @@ export default {
     login () {
       this.showMenu = !this.showMenu
       this.$router.push('/login')
+    },
+    logout () {
+      removeToken()
+      this.$store.dispatch('SET_USERAVATAR', null)
+      this.$store.dispatch('SET_LOGINNAME', null)
     }
   }
 }

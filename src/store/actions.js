@@ -23,3 +23,11 @@ export const SET_TOKEN = ({ commit }, token) => {
     }
   })
 }
+
+export const SET_USERAVATAR = ({ commit }, val) => {
+  commit('SET_USERAVATAR', val)
+}
+
+export const SET_LOGINNAME = ({ commit }, val) => {
+  commit('SET_LOGINNAME', val)
+}

@@ -10,12 +10,13 @@ Vue.prototype.$ajax = axios
 
 Vue.config.productionTip = false
 
-router.beforeEach((to, from, next) => {
+/* router.beforeEach((to, from, next) => {
+  console.log(store.getters.token)
   if (store.getters.token) {
     store.dispatch('SET_TOKEN', store.getters.token)
   }
   next()
-})
+}) */
 
 /* eslint-disable no-new */
 new Vue({
