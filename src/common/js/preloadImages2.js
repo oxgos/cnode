@@ -7,20 +7,24 @@ export function preloadImages (str) {
 	let arr = str.match(/src="(.+)"\s{1}/g)
   // 返回一个Promise对象
 	return new Promise((resolve, reject) => {
-		for (let i = 0; i < arr.length; i++) {
-			newImages[i] = new Image()
-			// 设置图片src属性
-			newImages[i].src = arr[i].slice(5, -2)
-			// 图片绑定onload事件,确保加载完成
-			newImages[i].onload = () => {
-				loadedImage++
-				// 当全部加载完成后,resolve
-				if (loadedImage === arr.length) {
-					resolve()
+		if (!arr) {
+			resolve()
+		} else {
+			for (let i = 0; i < arr.length; i++) {
+				newImages[i] = new Image()
+				// 设置图片src属性
+				newImages[i].src = arr[i].slice(5, -2)
+				// 图片绑定onload事件,确保加载完成
+				newImages[i].onload = () => {
+					loadedImage++
+					// 当全部加载完成后,resolve
+					if (loadedImage === arr.length) {
+						resolve()
+					}
 				}
-			}
-			newImages[i].onerror = () => {
-				reject()
+				newImages[i].onerror = () => {
+					reject()
+				}
 			}
 		}
 	})

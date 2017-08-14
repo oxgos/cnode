@@ -9,6 +9,7 @@ Vue.use(Vuex)
 
 const state = {
   showHeader: true,
+  menuStatus: false,
   ajaxLoading: false,
   token: getToken(),
   userAvatar: null,

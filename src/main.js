@@ -5,7 +5,9 @@ import App from './App'
 import axios from 'axios'
 import router from './router'
 import store from './store/index'
+import VueQuillEditor from 'vue-quill-editor'
 
+Vue.use(VueQuillEditor)
 Vue.prototype.$ajax = axios
 
 Vue.config.productionTip = false

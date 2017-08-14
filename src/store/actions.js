@@ -31,3 +31,7 @@ export const SET_USERAVATAR = ({ commit }, val) => {
 export const SET_LOGINNAME = ({ commit }, val) => {
   commit('SET_LOGINNAME', val)
 }
+
+export const CHANGE_MENUSTATUS = ({ commit }) => {
+  commit('CHANGE_MENUSTATUS')
+}

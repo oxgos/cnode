@@ -17,6 +17,7 @@ const job = resolve => require(['@/components/job/job'], resolve)
 const dev = resolve => require(['@/components/dev/dev'], resolve)
 const login = resolve => require(['@/components/login/login'], resolve)
 const topicDetail = resolve => require(['@/components/topicDetail/topicDetail'], resolve)
+const edit = resolve => require(['@/components/edit/edit'], resolve)
 
 Vue.use(Router)
 
@@ -61,6 +62,11 @@ export default new Router({
       path: '/topicDetail/:id',
       name: 'topicDetail',
       component: topicDetail
+    },
+    {
+      path: '/edit',
+      name: 'edit',
+      component: edit
     }
   ]
 })

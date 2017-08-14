@@ -13,3 +13,6 @@ export const SET_USERAVATAR = (state, userAvatar) => {
 export const SET_LOGINNAME = (state, loginName) => {
   state.loginName = loginName
 }
+export const CHANGE_MENUSTATUS = (state) => {
+  state.menuStatus = !state.menuStatus
+}
