@@ -2,7 +2,7 @@
   <div class="header">
   	<div class="title">
   		<div class="menu" @click="showM"></div>
-  		<h1><img src="static/img/cnodejs_light.svg" alt="" width="120" height="28"></h1>
+  		<div class="logo"><img src="static/img/cnodejs_light.svg" alt="" width="120" height="28"></div>
       <div class="newTopic" @click='writeTopic'></div>
   	</div>
   	<div class="nav">
@@ -59,6 +59,7 @@ export default {
   },
   methods: {
     writeTopic () {
+      this.$store.dispatch('UPDATA_HEADER')
       this.$router.push('/edit')
     },
     showM () {
