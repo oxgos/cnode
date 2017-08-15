@@ -1,5 +1,5 @@
-export const UPDATA_HEADER = state => {
-	state.showHeader = !state.showHeader
+export const UPDATA_HEADER = (state, val) => {
+	state.showHeader = val
 }
 export const UPDATA_AJAXLOADING = state => {
   state.ajaxLoading = !state.ajaxLoading

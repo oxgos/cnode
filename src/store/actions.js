@@ -1,7 +1,7 @@
 import { setToken } from '../common/js/cookie.js'
 import fetch from '../common/js/fetch.js'
 
-export const UPDATA_HEADER = ({ commit }) => commit('UPDATA_HEADER')
+export const UPDATA_HEADER = ({ commit }, val) => commit('UPDATA_HEADER', val)
 
 export const UPDATA_AJAXLOADING = ({ commit }) => commit('UPDATA_AJAXLOADING')
 

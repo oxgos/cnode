@@ -35,7 +35,7 @@ export default {
   methods: {
     back () {
       this.$router.go(-1)
-      this.$store.dispatch('UPDATA_HEADER')
+      this.$store.dispatch('UPDATA_HEADER', true)
     }
   }
 }

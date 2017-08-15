@@ -12,13 +12,19 @@ Vue.prototype.$ajax = axios
 
 Vue.config.productionTip = false
 
-/* router.beforeEach((to, from, next) => {
-  console.log(store.getters.token)
+ router.beforeEach((to, from, next) => {
   if (store.getters.token) {
-    store.dispatch('SET_TOKEN', store.getters.token)
+    if (to.path === '/edit') {
+      console.log(1)
+      store.dispatch('SET_TOKEN', store.getters.token)
+    }
+  } else {
+    if (to.path === '/edit') {
+      next('/login')
+    }
   }
   next()
-}) */
+})
 
 /* eslint-disable no-new */
 new Vue({

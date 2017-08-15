@@ -8,16 +8,16 @@
     <div class="head">
       <div class="title">
         <label for="topicTitle">帖子标题</label>
-        <input type="text" placeholder="发表新话题">
+        <input type="text" placeholder="发表新话题" v-model="title">
       </div>
       <div class="tag">帖子标签</div>
       <div class="type">
         <h5 @click="showDrop" v-model='type'>{{ type }}<i class="more"></i></h5>
         <ul class="dropdown" v-show="classify" @click.stop.prevent="select($event)">
-          <li>分享</li>
-          <li>问答</li>
-          <li>招聘</li>
-          <li>测试</li>
+          <li data-tab="share">分享</li>
+          <li data-tab="ask">问答</li>
+          <li data-tab="job">招聘</li>
+          <li data-tab="dev">测试</li>
         </ul>
       </div>
     </div>
@@ -38,7 +38,9 @@
       return {
         classify: false,
         content: '',
-        type: '请选择',
+        title: null,
+        type: null,
+        tab: '',
         editorOption: {
           // some quill options
           modules: {
@@ -76,17 +78,28 @@
       },
       select (e) {
         if (e.target.nodeName === 'LI') {
-          let val = e.target.innerHTML
-          this.type = val
+          this.type = e.target.innerHTML
+          this.tab = e.target.getAttribute('data-tab')
           this.classify = !this.classify
         }
       },
       back () {
         this.$router.go(-1)
-        this.$store.dispatch('UPDATA_HEADER')
+        this.$store.dispatch('UPDATA_HEADER', true)
       },
       submitTopic () {
-        
+        this.$ajax.post('https://cnodejs.org/api/v1/topics', {
+               accesstoken: this.$store.getters.token,
+               title: this.title,
+               tab: this.tab,
+               content: this.content
+        }).then(res => {
+            if (res.data.success) {
+            	this.$router.redirect(`/topicDetail/${res.data.topic_id}`)
+            }
+        }).catch(err => {
+        	console.log(err)
+        })
       }
     },
     // get the current quill instace object.

@@ -27,6 +27,7 @@ export default {
   methods: {
     back () {
       this.$router.go(-1)
+      this.$store.dispatch('UPDATA_HEADER', true)
     },
     signIn () {
       this.$store.dispatch('SET_TOKEN', this.accesstoken)
