@@ -39,7 +39,7 @@
         classify: false,
         content: '',
         title: null,
-        type: null,
+        type: '请选择',
         tab: '',
         editorOption: {
           // some quill options
@@ -95,7 +95,7 @@
                content: this.content
         }).then(res => {
             if (res.data.success) {
-            	this.$router.redirect(`/topicDetail/${res.data.topic_id}`)
+            	this.$router.push(`/topicDetail/:${res.data.topic_id}`)
             }
         }).catch(err => {
         	console.log(err)

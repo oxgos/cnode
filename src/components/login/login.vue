@@ -31,6 +31,7 @@ export default {
     },
     signIn () {
       this.$store.dispatch('SET_TOKEN', this.accesstoken)
+      this.$store.dispatch('UPDATA_HEADER', true)
       this.$router.push('/')
     }
   }
