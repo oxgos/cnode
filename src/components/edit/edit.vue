@@ -33,6 +33,8 @@
 </template>
 
 <script>
+  // import fetch from 'common/js/fetch.js'
+
   export default {
     data () {
       return {
@@ -73,9 +75,11 @@
         // console.log('editor change!', editor, html, text)
         this.content = html
       },
+      // 下拉框显示与否
       showDrop () {
         this.classify = !this.classify
       },
+      // 选择文章分类
       select (e) {
         if (e.target.nodeName === 'LI') {
           this.type = e.target.innerHTML
@@ -83,10 +87,12 @@
           this.classify = !this.classify
         }
       },
+      // 返回上一页按钮
       back () {
         this.$router.go(-1)
         this.$store.dispatch('UPDATA_HEADER', true)
       },
+      // 发表文章
       submitTopic () {
         this.$ajax.post('https://cnodejs.org/api/v1/topics', {
                accesstoken: this.$store.getters.token,

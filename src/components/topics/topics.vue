@@ -12,7 +12,7 @@
       <li class="line" v-for="item in topics">
        <div class="header">
           <span class="tab" :class="{'good': item.top || item.good}">{{ classify(item.top, item.good, item.tab) }}</span>
-          <span class="title" @click="showDetail(item.id)">{{ item.title }}</span>
+          <span class="title" @click="showDetail($event, item.id)">{{ item.title }}</span>
        </div>
        <div class="detail">
           <div class="avatar">
@@ -52,7 +52,10 @@ export default {
     ])
   },
   methods: {
-    showDetail (id) {
+    showDetail (e, id) {
+      if (!e._constructed) {
+          return
+      }
       this.$store.dispatch('UPDATA_HEADER')
       this.$router.push(`/topicDetail/:${id}`)
     },

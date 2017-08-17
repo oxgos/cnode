@@ -1,7 +1,7 @@
 <template>
   <div class="topicDetail">
     <div class="back">
-      <img src="static/img/back.svg" alt="" width="30" height="30" @click="back">
+      <img src="static/img/back.svg" alt="" width="30" height="30" @click="back()">
       <span>cnode社区</span>
     </div>
     <div class="content-wrapper"  ref="content">
@@ -21,7 +21,7 @@
             </div>
             <div class="fn">
               <span class="comment"></span>
-              <span class="collect"></span>
+              <span class="collect" :class="{'active':is_collect}" @click="collectTopic($event)"></span>
             </div>
           </div>
         </div>
@@ -40,9 +40,10 @@ export default {
   name: 'topicDetail',
   data () {
     return {
+      topic_id: null,
       author: null,
       avatar_url: null,
-      is_collect: null,
+      is_collect: true,
       good: null,
       tab: null,
       visit_count: null,
@@ -50,11 +51,17 @@ export default {
       content: null// 页面所有数据
     }
   },
+  // 进入路由页面前的钩子
   beforeRouteEnter (to, from, next) {
     let id = to.params.id.slice(1)
     next(vm => {
-      vm.$ajax.get(`https://cnodejs.org/api/v1/topic/${id}`)
+      vm.$ajax.get(`https://cnodejs.org/api/v1/topic/${id}`, {
+        params: {
+          accesstoken: vm.$store.getters.token
+        }
+      })
         .then((res) => {
+          vm.topic_id = id
           vm.author = res.data.data.author.loginname
           vm.avatar_url = res.data.data.author.avatar_url
           vm.is_collect = res.data.data.is_collect
@@ -65,17 +72,49 @@ export default {
           vm.tab = res.data.data.tab
           preloadImages(vm.content)
             .then(() => {
-              vm.contentScroll = new BScroll(vm.$refs.content, {})
+              vm.contentScroll = new BScroll(vm.$refs.content, {
+                click: true
+              })
             })
         })
     })
   },
   methods: {
+    collectTopic (e) {
+      if (!e._constructed) {
+          return
+      }
+      if (!this.$store.getters.token) {
+        this.$router.push('/login')
+      } else {
+        if (this.is_collect === false) {
+          this.$ajax.post('https://cnodejs.org/api/v1/topic_collect/collect', {
+            accesstoken: this.$store.getters.token,
+            topic_id: this.topic_id
+          }).then(res => {
+            if (res.data.success) {
+              this.is_collect = true
+            }
+          })
+        } else {
+          this.$ajax.post('https://cnodejs.org/api/v1/topic_collect/de_collect', {
+            accesstoken: this.$store.getters.token,
+            topic_id: this.topic_id
+          }).then(res => {
+            if (res.data.success) {
+              this.is_collect = false
+            }
+          })
+        }
+      }
+    },
+    // 返回首页
     back () {
-      this.$router.go(-1)
+      this.$router.push({ path: '/' })
       this.$store.dispatch('UPDATA_HEADER', true)
       this.content = null
     },
+    // 文章标签分类
     classify (good, tab) {
         if (good) {
           return '精华'
@@ -180,7 +219,10 @@ export default {
               height 20px
               vertical-align middle
               background url('../../../static/img/collect.png') no-repeat
-              background-size 20px 20px          
+              background-size 20px 20px
+              &.active
+                background url('../../../static/img/collect-active.png') no-repeat
+                background-size 20px 20px
       .content
         .markdown-text
           padding-bottom 30px

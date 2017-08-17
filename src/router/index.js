@@ -66,7 +66,11 @@ export default new Router({
     {
       path: '/edit',
       name: 'edit',
-      component: edit
+      component: edit,
+      // 是否需要登陆权限
+      meta: {
+        requireAuth: true
+      }
     }
   ]
 })
