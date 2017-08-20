@@ -28,7 +28,6 @@
         <div class="content" v-html="content"></div>
       </div>
     </div>
-      
   </div>
 </template>
 
