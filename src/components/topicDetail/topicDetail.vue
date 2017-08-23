@@ -20,7 +20,7 @@
               <span class="visit">{{ visit_count }}次浏览</span>
             </div>
             <div class="fn">
-              <span class="comment" @click.native="showReply($event)"></span>
+              <span class="comment" @click="showReply($event)"></span>
               <span class="collect" :class="{'active':is_collect}" @click="collectTopic($event)"></span>
             </div>
           </div>
@@ -89,14 +89,18 @@ export default {
           preloadImages(vm.content)
             .then(() => {
               vm.topicLoading = false
-              let contentScroll = new BScroll(vm.$refs.content, {
-                probeType: 3,
-                startX: 0,
-                startY: 0,
-                click: true
-              })
-              vm.scroll = contentScroll
-              contentScroll.on('scroll', (pos) => {
+              if (vm.contentScroll) {
+                vm.contentScroll.refresh()
+              } else {
+                vm.contentScroll = new BScroll(vm.$refs.content, {
+                  probeType: 3,
+                  startX: 0,
+                  startY: 0,
+                  click: true
+                })
+              }
+              vm.scroll = vm.contentScroll
+              vm.contentScroll.on('scroll', (pos) => {
                 if (pos.y <= -200) {
                   vm.$store.dispatch('SHOW_BACKTOP', true)
                 } else {

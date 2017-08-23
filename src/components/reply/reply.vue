@@ -36,11 +36,13 @@ export default {
   },
   mounted () {
     // console.log(this.replies)
-    this.$nextTick(() => {
+    if (this.replyScroll) {
+      this.replyScroll.refresh()
+    } else {
       this.replyScroll = new BScroll(this.$refs.main, {
         click: true
       })
-    })
+    }
   },
   methods: {
     goback () {
