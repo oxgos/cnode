@@ -1,7 +1,7 @@
 <template>
   <div class="topicDetail">
     <div class="back">
-      <img src="static/img/back.svg" alt="" width="30" height="30" @click="back()">
+      <img src="static/img/back.svg" alt="" width="30" height="30" @click="back">
       <span>cnode社区</span>
     </div>
     <div class="content-wrapper"  ref="content">
@@ -20,7 +20,7 @@
               <span class="visit">{{ visit_count }}次浏览</span>
             </div>
             <div class="fn">
-              <span class="comment"></span>
+              <span class="comment" @click="showReply($event)"></span>
               <span class="collect" :class="{'active':is_collect}" @click="collectTopic($event)"></span>
             </div>
           </div>
@@ -28,6 +28,7 @@
         <div class="content" v-html="content"></div>
       </div>
     </div>
+    <reply :replies="replies" v-if="replyStatus"></reply>
     <div class="topicMask" v-show="topicLoading">
       <div class="loading">
         <div class="loadingWrapper">
@@ -43,20 +44,23 @@
 import BScroll from 'better-scroll'
 import { preloadImages } from 'common/js/preloadImages2.js'
 import backtop from 'components/backtop/backtop'
+import reply from 'components/reply/reply'
 
 export default {
   name: 'topicDetail',
   data () {
     return {
-      topic_id: null, // 话题id
-      author: null, // 作者名字
-      avatar_url: null, // 作者头像
-      is_collect: true, // 是否收藏
-      good: null, // 精华标签
-      tab: null, // 分类标签
+      topic_id: '', // 话题id
+      author: '', // 作者名字
+      avatar_url: '', // 作者头像
+      is_collect: false, // 是否收藏
+      good: '', // 精华标签
+      tab: '', // 分类标签
       visit_count: null, // 访问量
       reply_count: null, // 回复数量
       content: null, // 页面所有数据
+      replies: [], // 所有回复的数据
+      replyStatus: false, // 显示评论页
       scroll: null,
       topicLoading: true
     }
@@ -81,6 +85,7 @@ export default {
           vm.content = res.data.data.content
           vm.good = res.data.data.good
           vm.tab = res.data.data.tab
+          vm.replies = res.data.data.replies
           preloadImages(vm.content)
             .then(() => {
               vm.topicLoading = false
@@ -103,6 +108,12 @@ export default {
     })
   },
   methods: {
+    showReply (e) {
+      if (!e._constructed) {
+          return
+      }
+      this.replyStatus = !this.replyStatus
+    },
     collectTopic (e) {
       if (!e._constructed) {
           return
@@ -133,7 +144,7 @@ export default {
     },
     // 返回首页
     back () {
-      this.$router.push({ path: '/' })
+      this.$router.go(-1)
       this.$store.dispatch('UPDATA_HEADER', true)
       this.content = null
     },
@@ -156,7 +167,8 @@ export default {
     }
   },
   components: {
-    backtop
+    backtop,
+    reply
   }
 }
 </script>
