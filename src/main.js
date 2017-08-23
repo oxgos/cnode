@@ -13,6 +13,11 @@ Vue.prototype.$ajax = axios
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
+  if (to.path !== '/') {
+    store.dispatch('UPDATA_HEADER', false)
+  } else {
+    store.dispatch('UPDATA_HEADER', true)
+  }
   if (to.meta.requireAuth) {
     if (!store.getters.token) {
       next('/login')

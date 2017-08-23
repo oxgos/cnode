@@ -20,7 +20,7 @@
               <span class="visit">{{ visit_count }}次浏览</span>
             </div>
             <div class="fn">
-              <span class="comment" @click="showReply($event)"></span>
+              <span class="comment" @click.native="showReply($event)"></span>
               <span class="collect" :class="{'active':is_collect}" @click="collectTopic($event)"></span>
             </div>
           </div>
@@ -42,6 +42,7 @@
 
 <script>
 import BScroll from 'better-scroll'
+import { mapState } from 'vuex'
 import { preloadImages } from 'common/js/preloadImages2.js'
 import backtop from 'components/backtop/backtop'
 import reply from 'components/reply/reply'
@@ -60,7 +61,6 @@ export default {
       reply_count: null, // 回复数量
       content: null, // 页面所有数据
       replies: [], // 所有回复的数据
-      replyStatus: false, // 显示评论页
       scroll: null,
       topicLoading: true
     }
@@ -107,12 +107,18 @@ export default {
         })
     })
   },
+  computed: {
+    ...mapState([
+      'replyStatus'
+    ])
+  },
   methods: {
     showReply (e) {
       if (!e._constructed) {
           return
       }
-      this.replyStatus = !this.replyStatus
+      console.log(1)
+      this.$store.dispatch('UPDATA_REPLYSTATUS')
     },
     collectTopic (e) {
       if (!e._constructed) {
@@ -145,7 +151,9 @@ export default {
     // 返回首页
     back () {
       this.$router.go(-1)
-      this.$store.dispatch('UPDATA_HEADER', true)
+      if (this.$store.getters.replyStatus) {
+        this.$store.dispatch('UPDATA_REPLYSTATUS')
+      }
       this.content = null
     },
     // 文章标签分类
@@ -283,6 +291,7 @@ export default {
       bottom 0
       width 100%
       background rgba(0, 0, 0, .3)
+      z-index 1500
       .loading
         display table
         width 100%

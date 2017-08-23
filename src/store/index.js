@@ -8,13 +8,14 @@ import { getToken } from '../common/js/cookie.js'
 Vue.use(Vuex)
 
 const state = {
-  showHeader: true,
-  menuStatus: false,
-  ajaxLoading: false,
-  token: getToken(),
-  userAvatar: null,
-  loginName: null,
-  showBacktop: false
+  showHeader: true, // 首页头部显示隐藏状态
+  menuStatus: false, // 菜单栏显示隐藏状态
+  ajaxLoading: false, // Loading显示隐藏状态
+  token: getToken(), // 登陆状态保存
+  userAvatar: null, // 登陆用户头像
+  loginName: null, // 登陆用户名称
+  showBacktop: false, // 返回头部显示隐藏
+  replyStatus: false // 评论页显示隐藏状态
 }
 
 export default new Vuex.Store({

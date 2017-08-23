@@ -59,7 +59,6 @@ export default {
   },
   methods: {
     writeTopic () {
-      this.$store.dispatch('UPDATA_HEADER', false)
       this.$router.push('/edit')
     },
     showM () {

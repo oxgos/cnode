@@ -56,7 +56,6 @@ export default {
       if (!e._constructed) {
           return
       }
-      this.$store.dispatch('UPDATA_HEADER', false)
       this.$router.push(`/topicDetail/:${id}`)
     },
     // 帖子分类
