@@ -16,3 +16,6 @@ export const SET_LOGINNAME = (state, loginName) => {
 export const CHANGE_MENUSTATUS = (state) => {
   state.menuStatus = !state.menuStatus
 }
+export const SHOW_BACKTOP = (state, bool) => {
+  state.showBacktop = bool
+}

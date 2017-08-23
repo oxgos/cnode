@@ -8,7 +8,7 @@ export const UPDATA_AJAXLOADING = ({ commit }) => commit('UPDATA_AJAXLOADING')
 export const UPDATA_AJAXLOADING_ASYNC = ({ commit }) => {
   setTimeout(() => {
     commit('UPDATA_AJAXLOADING')
-  }, 1500)
+  }, 1000)
 }
 
 export const SET_TOKEN = ({ commit }, token) => {
@@ -34,4 +34,7 @@ export const SET_LOGINNAME = ({ commit }, val) => {
 
 export const CHANGE_MENUSTATUS = ({ commit }) => {
   commit('CHANGE_MENUSTATUS')
+}
+export const SHOW_BACKTOP = ({ commit }, bool) => {
+  commit('SHOW_BACKTOP', bool)
 }

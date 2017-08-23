@@ -28,26 +28,29 @@
         <div class="content" v-html="content"></div>
       </div>
     </div>
+    <backtop :scroll="scroll"></backtop>
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
 import { preloadImages } from 'common/js/preloadImages2.js'
+import backtop from 'components/backtop/backtop'
 
 export default {
   name: 'topicDetail',
   data () {
     return {
-      topic_id: null,
-      author: null,
-      avatar_url: null,
-      is_collect: true,
-      good: null,
-      tab: null,
-      visit_count: null,
-      reply_count: null,
-      content: null// 页面所有数据
+      topic_id: null, // 话题id
+      author: null, // 作者名字
+      avatar_url: null, // 作者头像
+      is_collect: true, // 是否收藏
+      good: null, // 精华标签
+      tab: null, // 分类标签
+      visit_count: null, // 访问量
+      reply_count: null, // 回复数量
+      content: null, // 页面所有数据
+      scroll: null
     }
   },
   // 进入路由页面前的钩子
@@ -71,8 +74,19 @@ export default {
           vm.tab = res.data.data.tab
           preloadImages(vm.content)
             .then(() => {
-              vm.contentScroll = new BScroll(vm.$refs.content, {
+              let contentScroll = new BScroll(vm.$refs.content, {
+                probeType: 3,
+                startX: 0,
+                startY: 0,
                 click: true
+              })
+              vm.scroll = contentScroll
+              contentScroll.on('scroll', (pos) => {
+                if (pos.y <= -200) {
+                  vm.$store.dispatch('SHOW_BACKTOP', true)
+                } else {
+                  vm.$store.dispatch('SHOW_BACKTOP', false)
+                }
               })
             })
         })
@@ -130,6 +144,9 @@ export default {
           }
         }
     }
+  },
+  components: {
+    backtop
   }
 }
 </script>
@@ -137,11 +154,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus">
   .topicDetail
-    position absolute
-    top 0
-    left 0
-    bottom 0
+    position relative
     width 100%
+    height 100%
     .back
       width 100%
       height 40px

@@ -5,9 +5,6 @@
       <router-view></router-view>
     </keep-alive>
     <div class="mask" v-show="menuStatus" @click="hideM"></div>
-    <div class="backTop">
-      <img src="static/img/updater.png" alt="">
-    </div>
   </div>
 </template>
 
@@ -49,13 +46,4 @@ export default {
     padding-top 200px
     background rgba(0, 0, 0, .5)
     z-index 1250
-  .backTop
-    position absolute
-    bottom 10px
-    right 0px
-    opacity .8
-    z-index 1200
-    img
-      width 60px
-      height 60px
 </style>

@@ -4,7 +4,8 @@ const getters = {
   ajaxLoading: state => state.ajaxLoading,
   token: state => state.token,
   userAvatar: state => state.userAvatar,
-  loginName: state => state.loginName
+  loginName: state => state.loginName,
+  showBacktop: state => state.showBacktop
 }
 
 export default getters

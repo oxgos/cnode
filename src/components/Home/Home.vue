@@ -1,18 +1,22 @@
 <template>
   <div class="home" ref="home">
     <topics :topics="topics"></topics>
+    <backtop :scroll="scroll"></backtop>
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
 import topics from 'components/topics/topics'
+import backtop from 'components/backtop/backtop'
 
 export default {
   name: 'home',
   data () {
     return {
-      topics: [] // 页面所有数据
+      topics: [], // 页面所有数据
+      scroll: null,
+      pullDownRefresh: true // 设置下拉刷新开关，防止用户频繁请求
       /* authors: [], // 作者
       tabs: [], // 分类
       tops: [], // 是否顶置
@@ -33,28 +37,46 @@ export default {
         // DOM元素渲染完后,创建滚动
         this.$nextTick(() => {
           let homeScroll = new BScroll(this.$refs.home, {
-            probeType: 1,
+            probeType: 3,
+            startX: 0,
+            startY: 0,
             click: true
+          })
+          // 用于将scroll对象传递给子组件
+          this.scroll = homeScroll
+          // 滑动显示回到顶部按钮
+          homeScroll.on('scroll', (pos) => {
+            if (pos.y <= -200) {
+              this.$store.dispatch('SHOW_BACKTOP', true)
+            } else {
+              this.$store.dispatch('SHOW_BACKTOP', false)
+            }
           })
           // 下拉时更新数据
           homeScroll.on('touchend', (pos) => {
             if (pos.y >= 40) {
-              setTimeout(() => {
-                this.$ajax.get('https://cnodejs.org/api/v1/topics', {
-                  params: {
-                    limit: 20
-                  }
-                })
-                .then((res) => {
-                  this.$store.dispatch('UPDATA_AJAXLOADING')
-                  this.topics = res.data.data
-                  // 等待1.5s后，提示框消失
-                  this.$store.dispatch('UPDATA_AJAXLOADING_ASYNC')
-                  this.$nextTick(() => {
-                    homeScroll.refresh()
+              if (this.pullDownRefresh) {
+                this.pullDownRefresh = false
+                setTimeout(() => {
+                  this.$ajax.get('https://cnodejs.org/api/v1/topics', {
+                    params: {
+                      limit: 20
+                    }
                   })
-                })
-              }, 1000)
+                  .then((res) => {
+                    this.pullDownRefresh = true
+                    this.$store.dispatch('UPDATA_AJAXLOADING')
+                    this.topics = res.data.data
+                    // 等待1s后，提示框消失
+                    this.$store.dispatch('UPDATA_AJAXLOADING_ASYNC')
+                    this.$nextTick(() => {
+                      homeScroll.refresh()
+                    })
+                  })
+                }, 1000)
+              } else {
+                return
+              }
             } else if (pos.y < homeScroll.maxScrollY + 10) {
               this.$store.dispatch('UPDATA_AJAXLOADING')
               setTimeout(() => {
@@ -82,7 +104,8 @@ export default {
       })
   },
   components: {
-    topics
+    topics,
+    backtop
   }
 }
 </script>

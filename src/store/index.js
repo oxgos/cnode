@@ -13,7 +13,8 @@ const state = {
   ajaxLoading: false,
   token: getToken(),
   userAvatar: null,
-  loginName: null
+  loginName: null,
+  showBacktop: false
 }
 
 export default new Vuex.Store({
