@@ -28,6 +28,13 @@
         <div class="content" v-html="content"></div>
       </div>
     </div>
+    <div class="topicMask" v-show="topicLoading">
+      <div class="loading">
+        <div class="loadingWrapper">
+          <img src="static/img/loading.gif" alt="">
+        </div>
+      </div>
+    </div>
     <backtop :scroll="scroll"></backtop>
   </div>
 </template>
@@ -50,13 +57,15 @@ export default {
       visit_count: null, // 访问量
       reply_count: null, // 回复数量
       content: null, // 页面所有数据
-      scroll: null
+      scroll: null,
+      topicLoading: true
     }
   },
   // 进入路由页面前的钩子
   beforeRouteEnter (to, from, next) {
     let id = to.params.id.slice(1)
     next(vm => {
+      vm.topicLoading = true
       vm.$ajax.get(`https://cnodejs.org/api/v1/topic/${id}`, {
         params: {
           accesstoken: vm.$store.getters.token
@@ -74,6 +83,7 @@ export default {
           vm.tab = res.data.data.tab
           preloadImages(vm.content)
             .then(() => {
+              vm.topicLoading = false
               let contentScroll = new BScroll(vm.$refs.content, {
                 probeType: 3,
                 startX: 0,
@@ -254,4 +264,23 @@ export default {
             width 100%
           code
             white-space normal
+    .topicMask
+      position absolute
+      top 40px
+      left 0
+      bottom 0
+      width 100%
+      background rgba(0, 0, 0, .3)
+      .loading
+        display table
+        width 100%
+        height 100%
+        text-align center
+        .loadingWrapper
+          display table-cell
+          width 200px
+          height 200px
+          vertical-align middle
+          img
+            width 120px
 </style>
