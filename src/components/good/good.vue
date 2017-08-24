@@ -1,12 +1,14 @@
 <template>
   <div class="good" ref="good">
     <topics :topics="topics"></topics>
+    <backtop :scroll="scroll"></backtop>
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
 import topics from 'components/topics/topics'
+import backtop from 'components/backtop/backtop'
 import { dataAjax } from 'common/js/dataAjax'
 
 export default {
@@ -14,7 +16,8 @@ export default {
   data () {
     return {
       topics: [], // 页面所有数据
-      tab: null
+      tab: null,
+      scroll: null
       /* authors: [], // 作者
       tabs: [], // 分类
       tops: [], // 是否顶置
@@ -22,6 +25,15 @@ export default {
       creates_at: [], // 创建时间
       lasts_reply_at: [], // 最后回复时间
       titles: [] // 标题 */
+    }
+  },
+  beforeRouteLeave (to, from, next) {
+    if (to.name === 'topicDetail') {
+      next()
+    } else {
+      this.good.scrollTo(0, 0, 40)
+      this.$store.dispatch('SHOW_BACKTOP', false)
+      next()
     }
   },
   created () {
@@ -35,16 +47,29 @@ export default {
       .then((res) => {
         this.topics = res.data.data
         this.$nextTick(() => {
-          let good = new BScroll(this.$refs.good, {
-            probeType: 1,
+          this.good = new BScroll(this.$refs.good, {
+            probeType: 3,
             click: true
           })
-          dataAjax(good, this.tab, this)
+          // 用于将scroll对象传递给子组件
+          this.scroll = this.good
+          // 滑动显示回到顶部按钮
+          this.good.on('scroll', (pos) => {
+            if (pos.y <= -200) {
+              this.$store.dispatch('SHOW_BACKTOP', true)
+            } else if (pos.y > -200) {
+              this.$store.dispatch('SHOW_BACKTOP', false)
+            } else {
+              return
+            }
+          })
+          dataAjax(this.good, this.tab, this)
         })
       })
   },
   components: {
-    topics
+    topics,
+    backtop
   }
 }
 </script>

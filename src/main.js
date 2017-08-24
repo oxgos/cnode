@@ -13,10 +13,10 @@ Vue.prototype.$ajax = axios
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-  if (to.path !== '/') {
-    store.dispatch('UPDATA_HEADER', false)
-  } else {
+  if ((to.path === '/') || (to.path === '/good') || (to.path === '/share') || (to.path === '/ask') || (to.path === '/job') || (to.path === '/dev')) {
     store.dispatch('UPDATA_HEADER', true)
+  } else {
+    store.dispatch('UPDATA_HEADER', false)
   }
   if (to.meta.requireAuth) {
     if (!store.getters.token) {

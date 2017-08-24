@@ -1,12 +1,14 @@
 <template>
   <div class="dev" ref="dev">
     <topics :topics="topics"></topics>
+    <backtop :scroll="scroll"></backtop>
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
 import topics from 'components/topics/topics'
+import backtop from 'components/backtop/backtop'
 import { dataAjax } from 'common/js/dataAjax'
 
 export default {
@@ -14,7 +16,17 @@ export default {
   data () {
     return {
       topics: [], // 页面所有数据
-      tab: null
+      tab: null,
+      scroll: null
+    }
+  },
+  beforeRouteLeave (to, from, next) {
+    if (to.name === 'topicDetail') {
+      next()
+    } else {
+      this.dev.scrollTo(0, 0, 40)
+      this.$store.dispatch('SHOW_BACKTOP', false)
+      next()
     }
   },
   created () {
@@ -28,16 +40,29 @@ export default {
       .then((res) => {
         this.topics = res.data.data
         this.$nextTick(() => {
-          let dev = new BScroll(this.$refs.dev, {
-            probeType: 1,
+          this.dev = new BScroll(this.$refs.dev, {
+            probeType: 3,
             click: true
           })
-          dataAjax(dev, this.tab, this)
+          // 用于将scroll对象传递给子组件
+          this.scroll = this.dev
+          // 滑动显示回到顶部按钮
+          this.dev.on('scroll', (pos) => {
+            if (pos.y <= -200) {
+              this.$store.dispatch('SHOW_BACKTOP', true)
+            } else if (pos.y > -200) {
+              this.$store.dispatch('SHOW_BACKTOP', false)
+            } else {
+              return
+            }
+          })
+          dataAjax(this.dev, this.tab, this)
         })
       })
   },
   components: {
-    topics
+    topics,
+    backtop
   }
 }
 </script>

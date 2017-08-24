@@ -121,7 +121,6 @@ export default {
       if (!e._constructed) {
           return
       }
-      console.log(1)
       this.$store.dispatch('UPDATA_REPLYSTATUS')
     },
     collectTopic (e) {

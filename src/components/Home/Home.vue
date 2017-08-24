@@ -26,6 +26,15 @@ export default {
       titles: [] // 标题 */
     }
   },
+  beforeRouteLeave (to, from, next) {
+    if (to.name === 'topicDetail') {
+      next()
+    } else {
+      this.homeScroll.scrollTo(0, 0, 40)
+      this.$store.dispatch('SHOW_BACKTOP', false)
+      next()
+    }
+  },
   created () {
     this.$ajax.get('https://cnodejs.org/api/v1/topics', {
       params: {
@@ -36,24 +45,26 @@ export default {
         this.topics = res.data.data
         // DOM元素渲染完后,创建滚动
         this.$nextTick(() => {
-          let homeScroll = new BScroll(this.$refs.home, {
+          this.homeScroll = new BScroll(this.$refs.home, {
             probeType: 3,
             startX: 0,
             startY: 0,
             click: true
           })
           // 用于将scroll对象传递给子组件
-          this.scroll = homeScroll
+          this.scroll = this.homeScroll
           // 滑动显示回到顶部按钮
-          homeScroll.on('scroll', (pos) => {
+          this.homeScroll.on('scroll', (pos) => {
             if (pos.y <= -200) {
               this.$store.dispatch('SHOW_BACKTOP', true)
-            } else {
+            } else if (pos.y > -200) {
               this.$store.dispatch('SHOW_BACKTOP', false)
+            } else {
+              return
             }
           })
           // 下拉时更新数据
-          homeScroll.on('touchend', (pos) => {
+          this.homeScroll.on('touchend', (pos) => {
             if (pos.y >= 40) {
               if (this.pullDownRefresh) {
                 this.pullDownRefresh = false
@@ -70,14 +81,14 @@ export default {
                     // 等待1s后，提示框消失
                     this.$store.dispatch('UPDATA_AJAXLOADING_ASYNC')
                     this.$nextTick(() => {
-                      homeScroll.refresh()
+                      this.homeScroll.refresh()
                     })
                   })
                 }, 1000)
               } else {
                 return
               }
-            } else if (pos.y < homeScroll.maxScrollY + 10) {
+            } else if (pos.y < this.homeScroll.maxScrollY + 10) {
               this.$store.dispatch('UPDATA_AJAXLOADING')
               setTimeout(() => {
                 let count = 20
@@ -94,7 +105,7 @@ export default {
                   this.topics.push(...arr)
                   // 列表数量更变，刷新滚动
                   this.$nextTick(() => {
-                    homeScroll.refresh()
+                    this.homeScroll.refresh()
                   })
                 })
               }, 1000)
