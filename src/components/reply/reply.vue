@@ -1,7 +1,7 @@
 <template>
   <div class="reply">
   	<h4 class="replyCount">
-      <img src="static/img/goback.svg" alt="" @click="goback">
+      <img src="static/img/goback.svg" alt="" @click.stop.prevent="goback">
       <span>{{ replies.length }}个回复</span>
     </h4>
   	<div class="main" ref="main">
@@ -15,7 +15,7 @@
               <div class="authorId">{{ reply.author.loginname }}</div>
               <div class="creates_at">{{ reply.create_at | agoTime }}</div>
             </div>
-            <div class="up"></div>
+            <div class="up" :class="{ active: reply.is_uped }" @click.stop.prevent="isUp($event, reply.id)"></div>
           </div>
   				<div class="replyBottom" v-html="reply.content"></div>
   			</li>
@@ -25,8 +25,8 @@
       <form action="#">
         <div class="form-group">
           <label for="comment"></label>
-          <input id="comment" type="text" placeholder="评论">
-          <div class="btn"></div>
+          <input id="comment" type="text" placeholder="评论" v-model="msg">
+          <div class="btn" @click="submitComment($event)"></div>
         </div>  
       </form>
     </footer>
@@ -44,8 +44,13 @@ export default {
        type: Array
   	}
   },
+  data () {
+    return {
+      msg: null
+    }
+  },
   mounted () {
-    // console.log(this.replies)
+    console.log(this.replies)
     if (this.replyScroll) {
       this.replyScroll.refresh()
     } else {
@@ -55,6 +60,20 @@ export default {
     }
   },
   methods: {
+    isUp (e, id) {
+      if (!e._constructed) {
+          return
+      }
+      this.$ajax.post(`https://cnodejs.org/api/v1/reply/${id}/ups`, {
+        accesstoken: this.$store.getters.token
+      })
+        .then(res => {
+          console.log(res)
+        })
+    },
+    submitComment (e) {
+      console.log(1)
+    },
     goback () {
       this.$store.dispatch('UPDATA_REPLYSTATUS')
     }

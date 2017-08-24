@@ -9,14 +9,15 @@
 import BScroll from 'better-scroll'
 import topics from 'components/topics/topics'
 import backtop from 'components/backtop/backtop'
+import { dataAjax } from 'common/js/dataAjax.js'
 
 export default {
   name: 'home',
   data () {
     return {
       topics: [], // 页面所有数据
-      scroll: null,
-      pullDownRefresh: true // 设置下拉刷新开关，防止用户频繁请求
+      scroll: null/* ,
+      pullDownRefresh: true */// 设置下拉刷新开关，防止用户频繁请求
       /* authors: [], // 作者
       tabs: [], // 分类
       tops: [], // 是否顶置
@@ -63,8 +64,9 @@ export default {
               return
             }
           })
-          // 下拉时更新数据
-          this.homeScroll.on('touchend', (pos) => {
+          // 下拉时更新数据,加载更多
+          dataAjax(this.homeScroll, null, this)
+          /* this.homeScroll.on('touchend', (pos) => {
             if (pos.y >= 40) {
               if (this.pullDownRefresh) {
                 this.pullDownRefresh = false
@@ -110,7 +112,7 @@ export default {
                 })
               }, 1000)
             }
-          })
+          }) */
         })
       })
   },

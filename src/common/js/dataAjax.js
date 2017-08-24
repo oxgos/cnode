@@ -1,7 +1,9 @@
 export function dataAjax (scroll, tab, vm) {
+  let timer = null
   scroll.on('touchend', (pos) => {
     if (pos.y >= 40) { // 头部下拉刷新
-      setTimeout(() => {
+      timer && clearTimeout(timer) // 防止用户短时间内多次请求
+      timer = setTimeout(() => {
         vm.$ajax.get('https://cnodejs.org/api/v1/topics', {
           params: {
             tab: tab,
@@ -20,7 +22,8 @@ export function dataAjax (scroll, tab, vm) {
       }, 1000)
     } else if (pos.y < scroll.maxScrollY + 10) { // 底部加载更多
       vm.$store.dispatch('UPDATA_AJAXLOADING')
-      setTimeout(() => {
+      timer && clearTimeout(timer)
+      timer = setTimeout(() => {
         let count = 20
         count += 10
         vm.$ajax.get('https://cnodejs.org/api/v1/topics', {

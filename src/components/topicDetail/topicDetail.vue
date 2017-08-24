@@ -70,6 +70,7 @@ export default {
     let id = to.params.id.slice(1)
     next(vm => {
       vm.topicLoading = true
+      vm.$store.dispatch('UPDATA_HEADER', false)
       vm.$ajax.get(`https://cnodejs.org/api/v1/topic/${id}`, {
         params: {
           accesstoken: vm.$store.getters.token

@@ -58,6 +58,7 @@ export default {
           return
       }
       this.$router.push(`/topicDetail/:${id}`)
+      // this.$router.push({ name: 'topicDetail', params: { id: id } })
     },
     // 帖子分类
     classify (top, good, tab) {
