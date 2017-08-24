@@ -20,7 +20,7 @@
               <span class="visit">{{ visit_count }}次浏览</span>
             </div>
             <div class="fn">
-              <span class="comment" @click="showReply($event)"></span>
+              <span class="comment" @click.stop.prevent="showReply($event)"></span>
               <span class="collect" :class="{'active':is_collect}" @click="collectTopic($event)"></span>
             </div>
           </div>
@@ -216,6 +216,7 @@ export default {
       padding 10px 5px
       background #fff
       overflow hidden
+      z-index 1600
       box-sizing border-box  
       .author
         display flex
@@ -294,7 +295,7 @@ export default {
       bottom 0
       width 100%
       background rgba(0, 0, 0, .3)
-      z-index 1500
+      z-index 1650
       .loading
         display table
         width 100%

@@ -24,7 +24,7 @@
           </div>
           <div class="reply">
             <p><span class="reply_count">{{ item.reply_count }}</span>/{{ item.visit_count }}</p>
-            <p class="ago">{{ agoTime(item.last_reply_at) }}</p>
+            <p class="ago">{{ item.last_reply_at | agoTime }}</p>
           </div>
        </div>
       </li>
@@ -38,6 +38,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { formatTime } from 'common/js/formatTime.js'
 
 export default {
   name: 'topics',
@@ -82,24 +83,12 @@ export default {
     // 帖子创建时间
     createTime (time) {
       return time.split('T')[0] + ' ' + time.split('T')[1].split('.')[0]
-    },
+    }
+  },
+  filters: {
     // 最后回复时间
     agoTime (time) {
-      let ago = new Date(time)
-      ago = ago.getTime()
-      let now = new Date()
-      now = now.getTime()
-      let oneDay = 24 * 3600 * 1000
-      if (now - ago >= oneDay) {
-        let count = Math.round((now - ago) / oneDay)
-        return count + '天前'
-      } else if (now - ago >= 3600000 && (now - ago < oneDay)) {
-        let count = (now - ago) / 1000 / 3600
-        return Math.round(count) + '小时前'
-      } else {
-        let count = (now - ago) / 1000 / 60
-        return Math.round(count) + '分钟前'
-      }
+      return formatTime(time)
     }
   }
 }

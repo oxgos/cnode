@@ -18,7 +18,7 @@ service.interceptors.request.use(config => {
   } */
   return config
 }, error => {
-  console.log(error)
+  // console.log(error)
   return Promise.reject(error)
 })
 
@@ -26,7 +26,7 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(
   response => response,
   error => {
-    console.log(error)
+    // console.log(error)
     return Promise.reject(error)
   }
 )
