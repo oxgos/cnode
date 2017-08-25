@@ -30,13 +30,12 @@
   			</ul>
   		</div>	
   	</transition>
-	<!-- <div class="mask" v-show="showMenu" @click="hideM"></div> -->
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { removeToken } from 'common/js/cookie.js'
+import { getToken, removeToken } from 'common/js/cookie.js'
 
 export default {
   name: 'header',
@@ -62,6 +61,9 @@ export default {
       this.$router.push('/edit')
     },
     showM () {
+      if (getToken()) {
+        this.$store.dispatch('SET_TOKEN', getToken())
+      }
       this.$store.dispatch('CHANGE_MENUSTATUS')
     },
     login () {

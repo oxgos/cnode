@@ -1,5 +1,5 @@
 <template>
-  <div class="reply">
+  <div class="reply" v-show="replyStatus">
   	<h4 class="replyCount">
       <img src="static/img/goback.svg" alt="" @click.stop.prevent="goback">
       <span>{{ replies.length }}个回复</span>
@@ -32,14 +32,14 @@
         <div class="form-group" v-if="authorName">
           <label for="comment2"></label>
           <input id="comment2" type="text" placeholder="评论" v-model="msg">
-          <div class="btn2" @click.native="submitComment($event)">
+          <div class="btn2" @click="submitComment">
             <span>@{{ authorName }}</span>
           </div>
         </div>
         <div class="form-group" v-else>
           <label for="comment"></label>
           <input id="comment" type="text" placeholder="评论" v-model="msg">
-          <div class="btn1" @click.native="submitComment($event)"></div>
+          <div class="btn1" @click="submitComment"></div>
         </div>
       </form>
     </footer>
@@ -64,21 +64,23 @@ export default {
     return {
       msg: '',
       authorName: '',
-      reply_id: ''
-    }
-  },
-  mounted () {
-    // console.log(this.replies)
-    console.log(this.topic_id)
-    if (this.replyScroll) {
-      this.replyScroll.refresh()
-    } else {
-      this.replyScroll = new BScroll(this.$refs.main, {
-        click: true
-      })
+      reply_id: '',
+      replyStatus: false
     }
   },
   methods: {
+    showReply () {
+      this.replyStatus = !this.replyStatus
+      this.$nextTick(() => {
+        if (this.replyScroll) {
+          this.replyScroll.refresh()
+        } else {
+          this.replyScroll = new BScroll(this.$refs.main, {
+            click: true
+          })
+        }
+      })
+    },
     replyAuthor (e, name, id) {
       if (!e._constructed) {
           return
@@ -92,10 +94,12 @@ export default {
       }
     },
     isUp (e, index, id) {
-      if (!e._constructed) {
-          return
-      }
-      this.$ajax.post(`https://cnodejs.org/api/v1/reply/${id}/ups`, {
+      if (!e._constructed) return
+      if (!this.$store.getters.token) {
+        alert('请登录')
+        return
+      } else {
+        this.$ajax.post(`https://cnodejs.org/api/v1/reply/${id}/ups`, {
         accesstoken: this.$store.getters.token
       })
         .then(res => {
@@ -107,23 +111,33 @@ export default {
             this.replies[index].ups.length--
           }
         })
-    },
-    submitComment (e) {
-      if (!e._constructed) {
-          return
       }
-      console.log(2)
-      this.$ajax.post(`https://cnodejs.org/api/v1/topic/${this.topic_id}/replies`, {
-        accesstoken: this.$store.getters.token,
-        content: this.msg,
-        reply_id: this.reply_id
-      })
-        .then(res => {
-          console.log(res)
-        })
+    },
+    submitComment () {
+      if (!this.$store.getters.token) {
+        alert('请登录')
+        return
+      } else {
+        if (!this.msg) {
+          alert('内容不能为空')
+        } else {
+              this.$ajax.post(`https://cnodejs.org/api/v1/topic/${this.topic_id}/replies`, {
+                accesstoken: this.$store.getters.token,
+                content: this.msg,
+                reply_id: this.reply_id
+            })
+              .then(res => {
+                if (res.data.success) {
+                  alert('评论成功')
+                } else {
+                  alert('评论失败')
+                }
+              })
+          }
+        }
     },
     goback () {
-      this.$store.dispatch('UPDATA_REPLYSTATUS')
+      this.replyStatus = false
     }
   },
   filters: {
@@ -203,6 +217,14 @@ export default {
         .replyBottom
           width 100%
           font-size 12px
+          .markdown-text 
+            p
+              text-align justify
+              margin 5px 0
+            img
+              width 100%
+            code
+              white-space normal
     .comments
       position fixed
       left 0

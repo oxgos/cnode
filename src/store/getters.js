@@ -5,8 +5,7 @@ const getters = {
   token: state => state.token,
   userAvatar: state => state.userAvatar,
   loginName: state => state.loginName,
-  showBacktop: state => state.showBacktop,
-  replyStatus: state => state.replyStatus
+  showBacktop: state => state.showBacktop
 }
 
 export default getters

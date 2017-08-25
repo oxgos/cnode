@@ -38,6 +38,3 @@ export const CHANGE_MENUSTATUS = ({ commit }) => {
 export const SHOW_BACKTOP = ({ commit }, bool) => {
   commit('SHOW_BACKTOP', bool)
 }
-export const UPDATA_REPLYSTATUS = ({ commit }) => {
-  commit('UPDATA_REPLYSTATUS')
-}

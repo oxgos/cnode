@@ -16,7 +16,7 @@
               <span class="name">{{ author }}</span>
             </div>
             <div class="bottom">
-              <span class="reply">评论{{ reply_count }}个</span>
+              <span class="detailReply">评论{{ reply_count }}个</span>
               <span class="visit">{{ visit_count }}次浏览</span>
             </div>
             <div class="fn">
@@ -28,7 +28,7 @@
         <div class="content" v-html="content"></div>
       </div>
     </div>
-    <reply :replies="replies" :topic_id="topic_id" v-if="replyStatus"></reply>
+    <reply :replies="replies" :topic_id="topic_id" ref="reply"></reply>
     <div class="topicMask" v-show="topicLoading">
       <div class="loading">
         <div class="loadingWrapper">
@@ -42,7 +42,6 @@
 
 <script>
 import BScroll from 'better-scroll'
-import { mapState } from 'vuex'
 import { preloadImages } from 'common/js/preloadImages2.js'
 import backtop from 'components/backtop/backtop'
 import reply from 'components/reply/reply'
@@ -112,17 +111,12 @@ export default {
         })
     })
   },
-  computed: {
-    ...mapState([
-      'replyStatus'
-    ])
-  },
   methods: {
     showReply (e) {
       if (!e._constructed) {
           return
       }
-      this.$store.dispatch('UPDATA_REPLYSTATUS')
+      this.$refs.reply.showReply()
     },
     collectTopic (e) {
       if (!e._constructed) {
@@ -155,9 +149,7 @@ export default {
     // 返回首页
     back () {
       this.$router.go(-1)
-      if (this.$store.getters.replyStatus) {
-        this.$store.dispatch('UPDATA_REPLYSTATUS')
-      }
+      this.$refs.reply.goback()
       this.content = null
     },
     // 文章标签分类
@@ -248,7 +240,7 @@ export default {
               display inline-block
               font-weight 600
           .bottom
-            .reply
+            .detailReply
               margin-right 5px
           .fn
             position absolute
