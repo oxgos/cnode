@@ -6,7 +6,7 @@
     </h4>
   	<div class="main" ref="main">
   		<ul>
-  			<li class="replyLine" v-for="reply in replies">
+  			<li class="replyLine" v-for="(reply, index) in replies">
           <div class="replyTop">
             <div class="replayAuthor">
               <img :src="reply.author.avatar_url" alt="">
@@ -15,7 +15,13 @@
               <div class="authorId">{{ reply.author.loginname }}</div>
               <div class="creates_at">{{ reply.create_at | agoTime }}</div>
             </div>
-            <div class="up" :class="{ active: reply.is_uped }" @click.stop.prevent="isUp($event, reply.id)"></div>
+            <div class="up" :class="{ active: reply.is_uped }" @click.stop.prevent="isUp($event, index, reply.id)">
+              {{ reply.ups.length }}
+              <span @click.stop.prevent="replyAuthor($event, reply.author.loginname, reply.id)">
+                <img src="./reply.png" alt="" width="12"
+              height="12">
+              </span>
+            </div>
           </div>
   				<div class="replyBottom" v-html="reply.content"></div>
   			</li>
@@ -23,11 +29,18 @@
   	</div>
     <footer class="comments">
       <form action="#">
-        <div class="form-group">
+        <div class="form-group" v-if="authorName">
+          <label for="comment2"></label>
+          <input id="comment2" type="text" placeholder="评论" v-model="msg">
+          <div class="btn2" @click.native="submitComment($event)">
+            <span>@{{ authorName }}</span>
+          </div>
+        </div>
+        <div class="form-group" v-else>
           <label for="comment"></label>
           <input id="comment" type="text" placeholder="评论" v-model="msg">
-          <div class="btn" @click="submitComment($event)"></div>
-        </div>  
+          <div class="btn1" @click.native="submitComment($event)"></div>
+        </div>
       </form>
     </footer>
   </div>
@@ -42,15 +55,21 @@ export default {
   props: {
   	replies: {
        type: Array
-  	}
+  	},
+    topic_id: {
+      type: String
+    }
   },
   data () {
     return {
-      msg: null
+      msg: '',
+      authorName: '',
+      reply_id: ''
     }
   },
   mounted () {
-    console.log(this.replies)
+    // console.log(this.replies)
+    console.log(this.topic_id)
     if (this.replyScroll) {
       this.replyScroll.refresh()
     } else {
@@ -60,7 +79,19 @@ export default {
     }
   },
   methods: {
-    isUp (e, id) {
+    replyAuthor (e, name, id) {
+      if (!e._constructed) {
+          return
+      }
+      if (this.authorName === name) {
+        this.authorName = ''
+        this.reply_id = ''
+      } else {
+        this.authorName = name
+        this.reply_id = id
+      }
+    },
+    isUp (e, index, id) {
       if (!e._constructed) {
           return
       }
@@ -68,11 +99,28 @@ export default {
         accesstoken: this.$store.getters.token
       })
         .then(res => {
-          console.log(res)
+          if (res.data.action === 'up') {
+            this.replies[index].is_uped = true
+            this.replies[index].ups.length++
+          } else {
+            this.replies[index].is_uped = false
+            this.replies[index].ups.length--
+          }
         })
     },
     submitComment (e) {
-      console.log(1)
+      if (!e._constructed) {
+          return
+      }
+      console.log(2)
+      this.$ajax.post(`https://cnodejs.org/api/v1/topic/${this.topic_id}/replies`, {
+        accesstoken: this.$store.getters.token,
+        content: this.msg,
+        reply_id: this.reply_id
+      })
+        .then(res => {
+          console.log(res)
+        })
     },
     goback () {
       this.$store.dispatch('UPDATA_REPLYSTATUS')
@@ -138,13 +186,20 @@ export default {
             position absolute
             top 5px
             right 10px
-            width 12px
             height 12px
+            padding-left 18px
+            font-size 12px
+            line-height 12px
+            color #666
             background-image url('./good.png')
             background-repeat no-repeat
             background-size 12px 12px
+            box-sizing border-box
             &.active
               background-image url('./good-active.png')
+            span
+              vertical-align middle
+              margin-left 5px
         .replyBottom
           width 100%
           font-size 12px
@@ -156,6 +211,7 @@ export default {
       height 35px
       padding 2px 2px
       background #444
+      z-index 1700
       box-sizing border-box
       .form-group
         display flex
@@ -169,8 +225,23 @@ export default {
           border none
           outline none
           box-sizing border-box
-        .btn
-          flex 0 0 50px
-          background url('./write.png') no-repeat 9px 0
+        .btn1
+          flex 0 0 38px
+          background url('./write.png') no-repeat 4px 0
           background-size 34px 34px
+        .btn2
+          flex 0 0 100px
+          background url('./write.png') no-repeat 66px 0
+          background-size 34px 34px
+          span
+            display inline-block
+            width 60px
+            height 35px
+            padding 0 2px
+            line-height 35px
+            font-size 12px
+            color #fff
+            white-space nowrap
+            text-overflow ellipsis
+            overflow hidden
 </style>

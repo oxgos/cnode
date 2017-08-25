@@ -28,7 +28,7 @@
         <div class="content" v-html="content"></div>
       </div>
     </div>
-    <reply :replies="replies" v-if="replyStatus"></reply>
+    <reply :replies="replies" :topic_id="topic_id" v-if="replyStatus"></reply>
     <div class="topicMask" v-show="topicLoading">
       <div class="loading">
         <div class="loadingWrapper">
