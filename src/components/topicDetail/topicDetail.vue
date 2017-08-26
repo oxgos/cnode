@@ -1,5 +1,5 @@
 <template>
-  <div class="topicDetail">
+  <div class="topic-detail">
     <div class="back">
       <img src="static/img/back.svg" alt="" width="30" height="30" @click="back">
       <span>cnode社区</span>
@@ -16,7 +16,7 @@
               <span class="name">{{ author }}</span>
             </div>
             <div class="bottom">
-              <span class="detailReply">评论{{ reply_count }}个</span>
+              <span class="detail-reply">评论{{ reply_count }}个</span>
               <span class="visit">{{ visit_count }}次浏览</span>
             </div>
             <div class="fn">
@@ -29,9 +29,9 @@
       </div>
     </div>
     <reply :replies="replies" :topic_id="topic_id" ref="reply"></reply>
-    <div class="topicMask" v-show="topicLoading">
+    <div class="topic-mask" v-show="topicLoading">
       <div class="loading">
-        <div class="loadingWrapper">
+        <div class="loading-wrapper">
           <img src="static/img/loading.gif" alt="">
         </div>
       </div>
@@ -179,7 +179,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus">
-  .topicDetail
+  .topic-detail
     position relative
     width 100%
     height 100%
@@ -240,7 +240,7 @@ export default {
               display inline-block
               font-weight 600
           .bottom
-            .detailReply
+            .detail-reply
               margin-right 5px
           .fn
             position absolute
@@ -281,7 +281,7 @@ export default {
             width 100%
           code
             white-space normal
-    .topicMask
+    .topic-mask
       position absolute
       top 40px
       left 0
@@ -294,7 +294,7 @@ export default {
         width 100%
         height 100%
         text-align center
-        .loadingWrapper
+        .loading-wrapper
           display table-cell
           width 200px
           height 200px

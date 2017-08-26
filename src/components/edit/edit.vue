@@ -7,8 +7,8 @@
     </div>  
     <div class="head">
       <div class="title">
-        <label for="topicTitle">帖子标题</label>
-        <input type="text" placeholder="发表新话题" v-model="title">
+        <label for="topic-title">帖子标题</label>
+        <input id="topic-title" type="text" placeholder="发表新话题" v-model="title">
       </div>
       <div class="tag">帖子标签</div>
       <div class="type">
@@ -28,7 +28,7 @@
                   @focus="onEditorFocus($event)"
                   @ready="onEditorReady($event)">
     </quill-editor>
-    <button class="btn" @click="submitTopic">发表</button>
+    <button class="edit-btn" @click="submitTopic">发表</button>
   </div>
 </template>
 
@@ -197,7 +197,7 @@
           li
             padding-left 5px
             line-height 30px
-    .btn
+    .edit-btn
     	display block
     	width 100%
     	border none

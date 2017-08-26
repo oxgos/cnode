@@ -1,18 +1,18 @@
 <template>
   <div class="reply" v-show="replyStatus">
-  	<h4 class="replyCount">
+  	<h4 class="reply-count">
       <img src="static/img/goback.svg" alt="" @click.stop.prevent="goback">
       <span>{{ replies.length }}个回复</span>
     </h4>
   	<div class="main" ref="main">
   		<ul>
-  			<li class="replyLine" v-for="(reply, index) in replies">
-          <div class="replyTop">
-            <div class="replayAuthor">
+  			<li class="reply-line" v-for="(reply, index) in replies">
+          <div class="reply-top">
+            <div class="replay-author">
               <img :src="reply.author.avatar_url" alt="">
             </div>
-            <div class="authorInfo">
-              <div class="authorId">{{ reply.author.loginname }}</div>
+            <div class="author-info">
+              <div class="author-id">{{ reply.author.loginname }}</div>
               <div class="creates_at">{{ reply.create_at | agoTime }}</div>
             </div>
             <div class="up" :class="{ active: reply.is_uped }" @click.stop.prevent="isUp($event, index, reply.id)">
@@ -23,7 +23,7 @@
               </span>
             </div>
           </div>
-  				<div class="replyBottom" v-html="reply.content"></div>
+  				<div class="reply-bottom" v-html="reply.content"></div>
   			</li>
   		</ul>
   	</div>
@@ -160,7 +160,7 @@ export default {
     background #fff
     box-sizing border-box
     z-index 1650
-    .replyCount
+    .reply-count
       line-height 20px
       background #ccc
       img
@@ -179,20 +179,20 @@ export default {
       bottom 35px
       padding-bottom 35px
       overflow hidden
-      .replyLine
+      .reply-line
         margin 5px 0
         border 1px solid #eee
         box-sizing border-box
-        .replyTop
+        .reply-top
           position relative
-          .replayAuthor
+          .replay-author
             display inline-block
             margin-right 5px
             vertical-align top
             img
               width 30px
               height 30px
-          .authorInfo
+          .author-info
             display inline-block
             font-size 12px
             vertical-align top
@@ -214,7 +214,7 @@ export default {
             span
               vertical-align middle
               margin-left 5px
-        .replyBottom
+        .reply-bottom
           width 100%
           font-size 12px
           .markdown-text 

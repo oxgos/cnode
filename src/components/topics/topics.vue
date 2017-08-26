@@ -14,15 +14,15 @@
           <span class="tab" :class="{'good': item.top || item.good}">{{ classify(item.top, item.good, item.tab) }}</span>
           <span class="title" @click="showDetail($event, item.id)">{{ item.title }}</span>
        </div>
-       <div class="topicsDetail">
-          <div class="topicsAvatar">
+       <div class="topics-detail">
+          <div class="topics-avatar">
             <img :src="item.author.avatar_url" alt="" width="32" height="32">
           </div>
           <div class="info">
             <h5 class="author">{{ item.author.loginname }}</h5>
             <p class="time">创建时间: {{ createTime(item.create_at) }}</p>
           </div>
-          <div class="topicsReply">
+          <div class="topics-reply">
             <p><span class="reply_count">{{ item.reply_count }}</span>/{{ item.visit_count }}</p>
             <p class="ago">{{ item.last_reply_at | agoTime }}</p>
           </div>

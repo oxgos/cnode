@@ -3,7 +3,7 @@
   	<div class="title">
   		<div class="menu" @click="showM"></div>
   		<div class="logo"><img src="static/img/cnodejs_light.svg" alt="" width="120" height="28"></div>
-      <div class="newTopic" @click='writeTopic'></div>
+      <div class="new-topic" @click='writeTopic'></div>
   	</div>
   	<div class="nav">
   		<ul class="nav-wrapper">
