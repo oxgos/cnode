@@ -12,7 +12,7 @@
       <li class="line" v-for="item in topics">
        <div class="header">
           <span class="tab" :class="{'good': item.top || item.good}">{{ classify(item.top, item.good, item.tab) }}</span>
-          <span class="title" @click="showDetail($event, item.id)">{{ item.title }}</span>
+          <span class="title" @click="toTopicDetail($event, item.id)">{{ item.title }}</span>
        </div>
        <div class="topics-detail">
           <div class="topics-avatar">
@@ -53,12 +53,11 @@ export default {
     ])
   },
   methods: {
-    showDetail (e, id) {
+    toTopicDetail (e, topicId) {
       if (!e._constructed) {
           return
       }
-      this.$router.push(`/topicDetail/:${id}`)
-      // this.$router.push({ name: 'topicDetail', params: { id: id } })
+      this.$router.push(`/topicDetail/${topicId}`)
     },
     // 帖子分类
     classify (top, good, tab) {

@@ -64,60 +64,113 @@ export default {
       topicLoading: true
     }
   },
-  // 进入路由页面前的钩子
-  beforeRouteEnter (to, from, next) {
-    let id = to.params.id.slice(1)
-    next(vm => {
-      vm.topicLoading = true
-      vm.$store.dispatch('UPDATA_HEADER', false)
-      vm.$ajax.get(`https://cnodejs.org/api/v1/topic/${id}`, {
-        params: {
-          accesstoken: vm.$store.getters.token
-        }
-      })
-        .then((res) => {
-          vm.topic_id = id
-          vm.author = res.data.data.author.loginname
-          vm.avatar_url = res.data.data.author.avatar_url
-          vm.is_collect = res.data.data.is_collect
-          vm.visit_count = res.data.data.visit_count
-          vm.reply_count = res.data.data.reply_count
-          vm.content = res.data.data.content
-          vm.good = res.data.data.good
-          vm.tab = res.data.data.tab
-          vm.replies = res.data.data.replies
-          preloadImages(vm.content)
-            .then(() => {
-              vm.topicLoading = false
-              if (vm.contentScroll) {
-                vm.contentScroll.refresh()
-              } else {
-                vm.contentScroll = new BScroll(vm.$refs.content, {
-                  probeType: 3,
-                  startX: 0,
-                  startY: 0,
-                  click: true
-                })
-              }
-              vm.scroll = vm.contentScroll
-              vm.contentScroll.on('scroll', (pos) => {
-                if (pos.y <= -200) {
-                  vm.$store.dispatch('SHOW_BACKTOP', true)
-                } else {
-                  vm.$store.dispatch('SHOW_BACKTOP', false)
-                }
-              })
-            })
-        })
-    })
+  // keep-alive钩子,不活动状态和活动状态activated
+  deactivated () {
+    // 完全销毁一个实例,销毁后才会再次触发created周期
+    this.$destroy()
   },
+  created () {
+    let id = this.$route.params.id
+    this.topicLoading = true
+    this.$store.dispatch('UPDATA_HEADER', false)
+    this.$ajax.get(`https://cnodejs.org/api/v1/topic/${id}`, {
+      params: {
+        accesstoken: this.$store.getters.token
+      }
+    })
+      .then((res) => {
+        this.topic_id = id
+        this.author = res.data.data.author.loginname
+        this.avatar_url = res.data.data.author.avatar_url
+        this.is_collect = res.data.data.is_collect
+        this.visit_count = res.data.data.visit_count
+        this.reply_count = res.data.data.reply_count
+        this.content = res.data.data.content
+        this.good = res.data.data.good
+        this.tab = res.data.data.tab
+        this.replies = res.data.data.replies
+        preloadImages(this.content)
+          .then(() => {
+            this.topicLoading = false
+            if (this.contentScroll) {
+              this.contentScroll.refresh()
+            } else {
+              this.contentScroll = new BScroll(this.$refs.content, {
+                probeType: 3,
+                startX: 0,
+                startY: 0,
+                click: true
+              })
+            }
+            this.scroll = this.contentScroll
+            this.contentScroll.on('scroll', (pos) => {
+              if (pos.y <= -200) {
+                this.$store.dispatch('SHOW_BACKTOP', true)
+              } else {
+                this.$store.dispatch('SHOW_BACKTOP', false)
+              }
+            })
+          })
+      })
+  },
+  // 进入路由页面前的钩子
+  // beforeRouteEnter (to, from, next) {
+  //   let id = to.params.id.slice(0)
+  //   console.log('route')
+  //   next(vm => {
+  //     console.log(1)
+  //     vm.topicLoading = true
+  //     vm.$store.dispatch('UPDATA_HEADER', false)
+  //     vm.$ajax.get(`https://cnodejs.org/api/v1/topic/${id}`, {
+  //       params: {
+  //         accesstoken: vm.$store.getters.token
+  //       }
+  //     })
+  //       .then((res) => {
+  //         vm.topic_id = id
+  //         vm.author = res.data.data.author.loginname
+  //         vm.avatar_url = res.data.data.author.avatar_url
+  //         vm.is_collect = res.data.data.is_collect
+  //         vm.visit_count = res.data.data.visit_count
+  //         vm.reply_count = res.data.data.reply_count
+  //         vm.content = res.data.data.content
+  //         vm.good = res.data.data.good
+  //         vm.tab = res.data.data.tab
+  //         vm.replies = res.data.data.replies
+  //         preloadImages(vm.content)
+  //           .then(() => {
+  //             vm.topicLoading = false
+  //             if (vm.contentScroll) {
+  //               vm.contentScroll.refresh()
+  //             } else {
+  //               vm.contentScroll = new BScroll(vm.$refs.content, {
+  //                 probeType: 3,
+  //                 startX: 0,
+  //                 startY: 0,
+  //                 click: true
+  //               })
+  //             }
+  //             vm.scroll = vm.contentScroll
+  //             vm.contentScroll.on('scroll', (pos) => {
+  //               if (pos.y <= -200) {
+  //                 vm.$store.dispatch('SHOW_BACKTOP', true)
+  //               } else {
+  //                 vm.$store.dispatch('SHOW_BACKTOP', false)
+  //               }
+  //             })
+  //           })
+  //       })
+  //   })
+  // },
   methods: {
+    // 显示评论页
     showReply (e) {
       if (!e._constructed) {
           return
       }
       this.$refs.reply.showReply()
     },
+    // 收藏主题
     collectTopic (e) {
       if (!e._constructed) {
           return
