@@ -29,7 +29,7 @@
   			</div>
 
   			<ul>
-  				<li class="menu-option">我的消息</li>
+  				<li class="menu-option" @click="login">用户信息</li>
           <li class="menu-option">关于</li>
           <li class="menu-option" @click="logout">退出登陆</li>
   			</ul>
@@ -57,6 +57,10 @@ export default {
           return '话题详情'
         case 'login':
           return '登陆页面'
+        case 'userinfo':
+          return '用户信息'
+        case 'edit':
+          return '新建话题'
       }
     },
     changeTab () {
@@ -73,7 +77,7 @@ export default {
   },
   methods: {
     goBack () {
-      this.$router.go(-1)
+      this.$router.push('/')
     },
     writeTopic () {
       this.$router.push('/edit')

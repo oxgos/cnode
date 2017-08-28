@@ -1,10 +1,9 @@
 <template>
   <div class="edit">
-      <!-- bidirectional data binding（双向数据绑定） -->
-    <div class="back">
+    <!-- <div class="back">
       <i @click="back"></i>
       <div class="logo"><img src="static/img/cnodejs_light.svg" alt="" width="120" height="28"></div>
-    </div>  
+    </div>  --> 
     <div class="head">
       <div class="title">
         <label for="topic-title">帖子标题</label>
@@ -124,7 +123,7 @@
 <style lang="stylus">
   .edit
     position absolute
-    top 0
+    top 40px
     left 0
     bottom 0
     width 100%

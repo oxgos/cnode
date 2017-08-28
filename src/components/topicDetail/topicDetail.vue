@@ -108,55 +108,6 @@ export default {
           })
       })
   },
-  // 进入路由页面前的钩子
-  // beforeRouteEnter (to, from, next) {
-  //   let id = to.params.id.slice(0)
-  //   console.log('route')
-  //   next(vm => {
-  //     console.log(1)
-  //     vm.topicLoading = true
-  //     vm.$store.dispatch('UPDATA_HEADER', false)
-  //     vm.$ajax.get(`https://cnodejs.org/api/v1/topic/${id}`, {
-  //       params: {
-  //         accesstoken: vm.$store.getters.token
-  //       }
-  //     })
-  //       .then((res) => {
-  //         vm.topic_id = id
-  //         vm.author = res.data.data.author.loginname
-  //         vm.avatar_url = res.data.data.author.avatar_url
-  //         vm.is_collect = res.data.data.is_collect
-  //         vm.visit_count = res.data.data.visit_count
-  //         vm.reply_count = res.data.data.reply_count
-  //         vm.content = res.data.data.content
-  //         vm.good = res.data.data.good
-  //         vm.tab = res.data.data.tab
-  //         vm.replies = res.data.data.replies
-  //         preloadImages(vm.content)
-  //           .then(() => {
-  //             vm.topicLoading = false
-  //             if (vm.contentScroll) {
-  //               vm.contentScroll.refresh()
-  //             } else {
-  //               vm.contentScroll = new BScroll(vm.$refs.content, {
-  //                 probeType: 3,
-  //                 startX: 0,
-  //                 startY: 0,
-  //                 click: true
-  //               })
-  //             }
-  //             vm.scroll = vm.contentScroll
-  //             vm.contentScroll.on('scroll', (pos) => {
-  //               if (pos.y <= -200) {
-  //                 vm.$store.dispatch('SHOW_BACKTOP', true)
-  //               } else {
-  //                 vm.$store.dispatch('SHOW_BACKTOP', false)
-  //               }
-  //             })
-  //           })
-  //       })
-  //   })
-  // },
   methods: {
     // 显示评论页
     showReply (e) {
@@ -171,7 +122,8 @@ export default {
           return
       }
       if (!this.$store.getters.token) {
-        this.$router.push('/login')
+        alert('请先登陆')
+        // this.$router.push('/login')
       } else {
         if (this.is_collect === false) {
           this.$ajax.post('https://cnodejs.org/api/v1/topic_collect/collect', {

@@ -43,7 +43,9 @@ export default {
         'job': 4,
         'dev': 5,
         'login': 6,
-        'topicDetail': 7
+        'userinfo': 7,
+        'topicDetail': 8,
+        'edit': 9
       }
       this.transitionName = (index[to.name] > index[from.name]) ? 'slide-left' : 'slide-right'
     }

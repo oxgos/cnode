@@ -1,48 +1,52 @@
 <template>
-  <div class="reply" v-show="replyStatus">
-  	<h4 class="reply-count">
-      <img src="static/img/goback.svg" alt="" @click.stop.prevent="goback">
-      <span>{{ replies.length }}个回复</span>
-    </h4>
-  	<div class="main" ref="main">
-  		<ul>
-  			<li class="reply-line" v-for="(reply, index) in replies">
-          <div class="reply-top">
-            <div class="replay-author">
-              <img :src="reply.author.avatar_url" alt="">
-            </div>
-            <div class="author-info">
-              <div class="author-id">{{ reply.author.loginname }}</div>
-              <div class="creates_at">{{ reply.create_at | agoTime }}</div>
-            </div>
-            <div class="up" :class="{ active: reply.is_uped }" @click.stop.prevent="isUp($event, index, reply.id)">
-              {{ reply.ups.length }}
-              <span @click.stop.prevent="replyAuthor($event, reply.author.loginname, reply.id)">
-                <img src="./reply.png" alt="" width="12"
-              height="12">
-              </span>
-            </div>
-          </div>
-  				<div class="reply-bottom" v-html="reply.content"></div>
-  			</li>
-  		</ul>
-  	</div>
-    <footer class="comments">
-      <form action="#">
-        <div class="form-group" v-if="authorName">
-          <label for="comment2"></label>
-          <input id="comment2" type="text" placeholder="评论" v-model="msg">
-          <div class="btn2" @click="submitComment">
-            <span>@{{ authorName }}</span>
-          </div>
+  <div>
+    <transition name="move">
+      <div class="reply" v-show="replyStatus">
+        <h4 class="reply-count">
+          <img src="static/img/goback.svg" alt="" @click.stop.prevent="goback">
+          <span>{{ replies.length }}个回复</span>
+        </h4>
+        <div class="main" ref="main">
+          <ul>
+            <li class="reply-line" v-for="(reply, index) in replies">
+              <div class="reply-top">
+                <div class="replay-author">
+                  <img :src="reply.author.avatar_url" alt="">
+                </div>
+                <div class="author-info">
+                  <div class="author-id">{{ reply.author.loginname }}</div>
+                  <div class="creates_at">{{ reply.create_at | agoTime }}</div>
+                </div>
+                <div class="up" :class="{ active: reply.is_uped }" @click.stop.prevent="isUp($event, index, reply.id)">
+                  {{ reply.ups.length }}
+                  <span @click.stop.prevent="replyAuthor($event, reply.author.loginname, reply.id)">
+                    <img src="./reply.png" alt="" width="12"
+                  height="12">
+                  </span>
+                </div>
+              </div>
+              <div class="reply-bottom" v-html="reply.content"></div>
+            </li>
+          </ul>
         </div>
-        <div class="form-group" v-else>
-          <label for="comment"></label>
-          <input id="comment" type="text" placeholder="评论" v-model="msg">
-          <div class="btn1" @click="submitComment"></div>
-        </div>
-      </form>
-    </footer>
+        <footer class="comments">
+          <form action="#">
+            <div class="form-group" v-if="authorName">
+              <label for="comment2"></label>
+              <input id="comment2" type="text" placeholder="评论" v-model="msg">
+              <div class="btn2" @click="submitComment">
+                <span>@{{ authorName }}</span>
+              </div>
+            </div>
+            <div class="form-group" v-else>
+              <label for="comment"></label>
+              <input id="comment" type="text" placeholder="评论" v-model="msg">
+              <div class="btn1" @click="submitComment"></div>
+            </div>
+          </form>
+        </footer>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -160,6 +164,11 @@ export default {
     background #fff
     box-sizing border-box
     z-index 1650
+    transform translate3d(0, 0, 0)
+    &.move-enter-active, &.move-leave-active
+      transition all 0.35s ease-out
+    &.move-enter, &.move-leave-active
+      transform translate3d(100%, 0, 0)
     .reply-count
       line-height 20px
       background #ccc
