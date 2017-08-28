@@ -3,6 +3,8 @@ import fetch from '../common/js/fetch.js'
 
 export const UPDATA_HEADER = ({ commit }, val) => commit('UPDATA_HEADER', val)
 
+export const UPDATA_NAV = ({ commit }, val) => commit('UPDATA_NAV', val)
+
 export const UPDATA_AJAXLOADING = ({ commit }) => commit('UPDATA_AJAXLOADING')
 
 export const UPDATA_AJAXLOADING_ASYNC = ({ commit }) => {

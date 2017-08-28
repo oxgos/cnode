@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-header v-show='showHeader'></v-header>
+    <v-header></v-header>
     <transition :name="transitionName">
       <keep-alive>
         <router-view class="view"></router-view>
@@ -23,7 +23,6 @@ export default {
   },
   computed: {
     ...mapState([
-      'showHeader',
       'menuStatus',
       'maskStatus'
     ])
@@ -33,23 +32,22 @@ export default {
       this.$store.dispatch('CHANGE_MENUSTATUS')
     }
   },
-  // watch: {
-  //   '$route' (to, from) {
-  //     let path = {
-  //       '/': 0,
-  //       '/good': 1,
-  //       '/share': 2,
-  //       '/ask': 3,
-  //       '/job': 4,
-  //       '/dev': 5
-  //     }
-  //     if (path[to.path] && path[from.path]) {
-  //       this.transitionName = (path[to.path] > path[from.path]) ? 'slide-left' : 'slide-right'
-  //     } else {
-  //       this.transitionName = ''
-  //     }
-  //   }
-  // },
+  watch: {
+    '$route' (to, from) {
+      // 页面过渡索引
+      let index = {
+        'Home': 0,
+        'good': 1,
+        'share': 2,
+        'ask': 3,
+        'job': 4,
+        'dev': 5,
+        'login': 6,
+        'topicDetail': 7
+      }
+      this.transitionName = (index[to.name] > index[from.name]) ? 'slide-left' : 'slide-right'
+    }
+  },
   components: {
     vHeader
   }
@@ -61,17 +59,16 @@ export default {
   position relative
   width 100%
   height 100%
-  // .view
-  //   width 100%
-  //   transition all 0.35s cubic-bezier(.42, 0, .58, 1)
-  //   .slide-left-enter, .slide-right-leave-active
-  //     opacity 0
-  //     -webkit-transform: translateX(500px)
-  //     transform translateX(500px)
-  //   .slide-left-leave-active, .slide-right-enter 
-  //     opacity 0
-  //     -webkit-transform translateX(-500px)
-  //     transform translateX(-500px)
+  .view
+    width 100%
+    transition all 0.35s cubic-bezier(.42, 0, .58, 1)
+  .slide-left-enter, .slide-right-leave-active
+    opacity 0
+    -webkit-transform: translateX(500px)
+  .slide-left-leave-active, .slide-right-enter 
+    opacity 0
+    -webkit-transform translateX(-500px)
+    transform translateX(-500px)
   .mask
     position absolute
     top 0

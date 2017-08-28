@@ -152,7 +152,7 @@ export default {
 <style lang="stylus" scoped>
   .reply
     position absolute
-    top 40px
+    top 0
     left 0
     bottom 0
     width 100%

@@ -1,9 +1,5 @@
 <template>
   <div class="topic-detail">
-    <div class="back">
-      <img src="static/img/back.svg" alt="" width="30" height="30" @click="back">
-      <span>cnode社区</span>
-    </div>
     <div class="content-wrapper"  ref="content">
       <div>
         <div class="author">
@@ -72,7 +68,6 @@ export default {
   created () {
     let id = this.$route.params.id
     this.topicLoading = true
-    this.$store.dispatch('UPDATA_HEADER', false)
     this.$ajax.get(`https://cnodejs.org/api/v1/topic/${id}`, {
       params: {
         accesstoken: this.$store.getters.token
@@ -199,12 +194,6 @@ export default {
         }
       }
     },
-    // 返回首页
-    back () {
-      this.$router.go(-1)
-      this.$refs.reply.goback()
-      this.content = null
-    },
     // 文章标签分类
     classify (good, tab) {
         if (good) {
@@ -233,18 +222,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus">
   .topic-detail
-    position relative
+    position absolute
+    top 40px
+    left 0
     width 100%
     height 100%
     .back
-      width 100%
-      height 40px
-      padding-top 5px
-      background #444
-      box-sizing border-box
-      img
-        display inline-block
-        vertical-align top
       span
         display inline-block
         height 30px
@@ -255,7 +238,7 @@ export default {
         vertical-align top
     .content-wrapper
       position absolute
-      top 40px
+      top 0
       left 0
       bottom 0
       width 100%
@@ -336,7 +319,7 @@ export default {
             white-space normal
     .topic-mask
       position absolute
-      top 40px
+      top 0
       left 0
       bottom 0
       width 100%

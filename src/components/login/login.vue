@@ -1,9 +1,5 @@
 <template>
   <div class="login">
-    <div class="header">
-      <img src="static/img/back.svg" alt="" width="30" height="30" @click="back">
-      <span>登录</span>
-    </div>
     <div class="container">
       <form action="#" method="post">
         <div class="form-group">
@@ -25,13 +21,8 @@ export default {
     }
   },
   methods: {
-    back () {
-      this.$router.go(-1)
-      this.$store.dispatch('UPDATA_HEADER', true)
-    },
     signIn () {
       this.$store.dispatch('SET_TOKEN', this.accesstoken)
-      this.$store.dispatch('UPDATA_HEADER', true)
       this.$router.push('/')
     }
   }
@@ -42,24 +33,11 @@ export default {
 <style lang="stylus" scoped>
   .login
     position absolute
-    top 0
+    top 40px
     left 0
     bottom 0
     width 100%
     background #eee
-    .header
-      width 100%
-      height 40px
-      text-align center
-      background #444
-      img
-        position absolute
-        top 5px
-        left 0
-      span
-        color #fff
-        font-size 20px
-        line-height 40px  
     .container
       padding-top 150px
       form

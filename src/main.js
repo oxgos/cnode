@@ -15,11 +15,14 @@ Vue.config.productionTip = false
 router.beforeEach((to, from, next) => {
   if ((to.path === '/') || (to.path === '/good') || (to.path === '/share') || (to.path === '/ask') || (to.path === '/job') || (to.path === '/dev')) {
     store.dispatch('UPDATA_HEADER', true)
-  }/* else {
+    store.dispatch('UPDATA_NAV', true)
+  } else {
     store.dispatch('UPDATA_HEADER', false)
-  } */
+    store.dispatch('UPDATA_NAV', false)
+  }
   if (to.meta.requireAuth) {
     if (!store.getters.token) {
+      alert('请先登陆')
       next('/login')
     }
   }

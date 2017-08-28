@@ -8,7 +8,8 @@ import { getToken } from '../common/js/cookie.js'
 Vue.use(Vuex)
 
 const state = {
-  showHeader: true, // 首页头部显示隐藏状态
+  headerStatus: true,
+  navStatus: true, // 首页头部显示隐藏状态
   menuStatus: false, // 菜单栏显示隐藏状态
   ajaxLoading: false, // Loading显示隐藏状态
   token: getToken(), // 登陆状态保存

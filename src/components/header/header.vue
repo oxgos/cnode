@@ -1,11 +1,15 @@
 <template>
   <div class="header">
-  	<div class="title">
+  	<div class="title" v-if="headerStatus">
   		<div class="menu" @click="showM"></div>
   		<div class="logo"><img src="static/img/cnodejs_light.svg" alt="" width="120" height="28"></div>
       <div class="new-topic" @click='writeTopic'></div>
   	</div>
-  	<div class="nav">
+    <div class="subTitle" v-else>
+      <img src="static/img/back.svg" alt="" width="30" height="30" @click="goBack">
+      <h3>{{ subTitle }}</h3>
+    </div>
+  	<div class="nav" v-show="navStatus">
   		<ul class="nav-wrapper">
   			<li><router-link to="/" :class="{active: changeTab === '/'}">全部</router-link></li>
   			<li><router-link to="/good" :class="{active: changeTab === '/good'}">精华</router-link></li>
@@ -46,6 +50,14 @@ export default {
     }
   },
   computed: {
+    subTitle () {
+      switch (this.$route.name) {
+        case 'topicDetail':
+          return '话题详情'
+        case 'login':
+          return '登陆页面'
+      }
+    },
     changeTab () {
       this.tab = this.$route.path
       return this.tab
@@ -53,10 +65,15 @@ export default {
     ...mapState([
       'userAvatar',
       'loginName',
-      'menuStatus'
+      'menuStatus',
+      'navStatus',
+      'headerStatus'
     ])
   },
   methods: {
+    goBack () {
+      this.$router.go(-1)
+    },
     writeTopic () {
       this.$router.push('/edit')
     },

@@ -1,5 +1,6 @@
 const getters = {
-  showHeader: state => state.showHeader,
+  headerStatus: state => state.headerStatus,
+  navStatus: state => state.navStatus,
   menuStatus: state => state.menuStatus,
   ajaxLoading: state => state.ajaxLoading,
   token: state => state.token,
