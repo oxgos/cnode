@@ -18,6 +18,7 @@ const dev = resolve => require(['@/components/dev/dev'], resolve)
 const login = resolve => require(['@/components/login/login'], resolve)
 const topicDetail = resolve => require(['@/components/topicDetail/topicDetail'], resolve)
 const edit = resolve => require(['@/components/edit/edit'], resolve)
+const userinfo = resolve => require(['@/components/userinfo/userinfo'], resolve)
 
 Vue.use(Router)
 
@@ -57,6 +58,14 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: login
+    },
+    {
+      path: '/userinfo',
+      name: 'userinfo',
+      component: userinfo,
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/topicDetail/:id',

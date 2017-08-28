@@ -27,6 +27,7 @@
   					<p>{{ loginName? loginName : '登陆/Login' }}</p>
   				</figure>
   			</div>
+
   			<ul>
   				<li class="menu-option">我的消息</li>
           <li class="menu-option">关于</li>
@@ -85,7 +86,11 @@ export default {
     },
     login () {
       this.$store.dispatch('CHANGE_MENUSTATUS')
-      this.$router.push('/login')
+      if (this.$store.getters.token) {
+        this.$router.push('/userinfo')
+      } else {
+        this.$router.push('/login')
+      }
     },
     logout () {
       removeToken()

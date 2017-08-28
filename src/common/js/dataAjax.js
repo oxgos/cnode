@@ -1,3 +1,4 @@
+// 获取主页面内容请求
 export function dataAjax (scroll, tab, vm) {
   let timer = null
   scroll.on('touchend', (pos) => {
@@ -45,4 +46,14 @@ export function dataAjax (scroll, tab, vm) {
       }, 1000)
     }
   })
+}
+
+// 获取用户信息请求
+export function userinfoAjax (vm, loginName) {
+  return vm.$ajax.get(`https://cnodejs.org/api/v1/user/${loginName}`)
+}
+
+// 获取用户收藏主题信息请求
+export function usercollectAjax (vm, loginName) {
+  return vm.$ajax.get(`https://cnodejs.org/api/v1/topic_collect/${loginName}`)
 }
