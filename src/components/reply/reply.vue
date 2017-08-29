@@ -7,7 +7,7 @@
           <span>{{ replies.length }}个回复</span>
         </h4>
         <div class="main" ref="main">
-          <ul>
+          <ul class="main-wrapper">
             <li class="reply-line" v-for="(reply, index) in replies">
               <div class="reply-top">
                 <div class="replay-author">
@@ -185,59 +185,61 @@ export default {
       top 30px
       left 5px
       right 5px
-      bottom 35px
+      bottom 40px
       padding-bottom 35px
       overflow hidden
-      .reply-line
-        margin 5px 0
-        border 1px solid #eee
-        box-sizing border-box
-        .reply-top
-          position relative
-          .replay-author
-            display inline-block
-            margin-right 5px
-            vertical-align top
-            img
-              width 30px
-              height 30px
-          .author-info
-            display inline-block
+      .main-wrapper
+        padding-bottom 40px
+        .reply-line
+          margin 5px 0
+          border 1px solid #eee
+          box-sizing border-box
+          .reply-top
+            position relative
+            .replay-author
+              display inline-block
+              margin-right 5px
+              vertical-align top
+              img
+                width 30px
+                height 30px
+            .author-info
+              display inline-block
+              font-size 12px
+              vertical-align top
+            .up
+              position absolute
+              top 5px
+              right 10px
+              height 12px
+              padding-left 18px
+              font-size 12px
+              line-height 12px
+              color #666
+              background-image url('./good.png')
+              background-repeat no-repeat
+              background-size 12px 12px
+              box-sizing border-box
+              &.active
+                background-image url('./good-active.png')
+              span
+                vertical-align middle
+                margin-left 5px
+          .reply-bottom
+            width 100%
             font-size 12px
-            vertical-align top
-          .up
-            position absolute
-            top 5px
-            right 10px
-            height 12px
-            padding-left 18px
-            font-size 12px
-            line-height 12px
-            color #666
-            background-image url('./good.png')
-            background-repeat no-repeat
-            background-size 12px 12px
-            box-sizing border-box
-            &.active
-              background-image url('./good-active.png')
-            span
-              vertical-align middle
-              margin-left 5px
-        .reply-bottom
-          width 100%
-          font-size 12px
-          .markdown-text 
-            p
-              text-align justify
-              margin 5px 0
-            img
-              width 100%
-            code
-              white-space normal
+            .markdown-text
+              p
+                text-align justify
+                margin 5px 0
+              img
+                width 100%
+              code
+                white-space normal
     .comments
       position fixed
       left 0
-      bottom 0
+      bottom 40px
       width 100%
       height 35px
       padding 2px 2px

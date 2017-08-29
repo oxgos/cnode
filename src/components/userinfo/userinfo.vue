@@ -87,7 +87,6 @@ export default {
   			vm.recent_replies = vm.userdata.recent_replies
   			vm.recent_topics = vm.userdata.recent_topics
   			vm.collection = perms.data.data
-  			console.log(vm.recent_replies)
   			vm.$nextTick(() => {
   				vm.userinfo = new BScroll(this.$refs.content, {
   					click: true
