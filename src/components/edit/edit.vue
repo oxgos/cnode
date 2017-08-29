@@ -1,9 +1,5 @@
 <template>
   <div class="edit">
-    <!-- <div class="back">
-      <i @click="back"></i>
-      <div class="logo"><img src="static/img/cnodejs_light.svg" alt="" width="120" height="28"></div>
-    </div>  --> 
     <div class="head">
       <div class="title">
         <label for="topic-title">帖子标题</label>
@@ -86,11 +82,6 @@
           this.classify = !this.classify
         }
       },
-      // 返回上一页按钮
-      back () {
-        this.$router.go(-1)
-        this.$store.dispatch('UPDATA_HEADER', true)
-      },
       // 发表文章
       submitTopic () {
         this.$ajax.post('https://cnodejs.org/api/v1/topics', {
@@ -128,22 +119,6 @@
     bottom 0
     width 100%
     background #fff
-    .back
-      position relative
-      width 100%
-      height 40px
-      padding-top 5px
-      text-align center
-      background #444
-      box-sizing border-box
-      i
-      	position absolute
-      	left 0
-      	top 0
-      	width 40px
-      	height 40px
-      	background url('../../../static/img/back.svg') no-repeat 0 5px
-      	background-size 35px 35px
     .head
       .title
         text-align left

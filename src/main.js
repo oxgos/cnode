@@ -21,7 +21,6 @@ router.beforeEach((to, from, next) => {
     store.dispatch('UPDATA_NAV', false)
   }
   if (to.meta.requireAuth) {
-    console.log(store.getters.token)
     if (!store.getters.token) {
       if (from.name === 'login') {
         alert('请先登陆')

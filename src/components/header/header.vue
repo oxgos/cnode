@@ -2,11 +2,11 @@
   <div class="header">
   	<div class="title" v-if="headerStatus">
   		<div class="menu" @click="showM"></div>
-  		<div class="logo"><img src="static/img/cnodejs_light.svg" alt="" width="120" height="28"></div>
+  		<div class="logo"><img src="./cnodejs_light.svg" alt="" width="120" height="28"></div>
       <div class="new-topic" @click='writeTopic'></div>
   	</div>
     <div class="subTitle" v-else>
-      <img src="static/img/back.svg" alt="" width="30" height="30" @click="goBack">
+      <img src="./back.svg" alt="" width="30" height="30" @click="goBack">
       <h3>{{ subTitle }}</h3>
     </div>
   	<div class="nav" v-show="navStatus">
@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     goBack () {
-      this.$router.push('/')
+      this.$router.go(-1)
     },
     writeTopic () {
       this.$router.push('/edit')

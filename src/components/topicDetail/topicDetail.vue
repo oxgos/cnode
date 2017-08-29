@@ -28,7 +28,7 @@
     <div class="topic-mask" v-show="topicLoading">
       <div class="loading">
         <div class="loading-wrapper">
-          <img src="static/img/loading.gif" alt="">
+          <img src="./loading.gif" alt="">
         </div>
       </div>
     </div>
@@ -240,17 +240,17 @@ export default {
               height 25px
               margin-right 8px
               vertical-align top
-              background url('../../../static/img/comment-active.png') no-repeat
+              background url('./comment-active.png') no-repeat
               background-size 25px 25px 
             .collect
               display inline-block
               width 20px
               height 20px
               vertical-align middle
-              background url('../../../static/img/collect.png') no-repeat
+              background url('./collect.png') no-repeat
               background-size 20px 20px
               &.active
-                background url('../../../static/img/collect-active.png') no-repeat
+                background url('./collect-active.png') no-repeat
                 background-size 20px 20px
       .content
         .markdown-text

@@ -30,7 +30,7 @@
       </li>
     </ul>
     <div class="bottom-tip">
-      <img src="static/img/loading_ajax.gif" v-show="ajaxLoading" alt="" width="20" height="20">
+      <img src="./loading_ajax.gif" v-show="ajaxLoading" alt="" width="20" height="20">
       <span class="loading-hook">加载更多</span>
     </div>
   </div>
