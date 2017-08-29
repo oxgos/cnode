@@ -12,6 +12,7 @@
 
 ****
 ###预览图
+
 ![1](https://github.com/oxgos/cnode/blob/master/screenshot/screen1.jpg?raw=true)
 
 ![2](https://github.com/oxgos/cnode/blob/master/screenshot/screen2.jpg?raw=true)
