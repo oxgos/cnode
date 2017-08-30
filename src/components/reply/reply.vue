@@ -153,7 +153,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="stylus" scoped>
+<style lang="stylus">
   .reply
     position absolute
     top 0
@@ -186,8 +186,8 @@ export default {
       left 5px
       right 5px
       bottom 40px
-      padding-bottom 35px
       overflow hidden
+      z-index 1400
       .main-wrapper
         padding-bottom 40px
         .reply-line

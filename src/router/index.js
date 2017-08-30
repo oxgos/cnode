@@ -1,24 +1,26 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-/* import Home from '@/components/home/Home'
+import Home from '@/components/home/Home'
 import share from '@/components/share/share'
 import good from '@/components/good/good'
 import ask from '@/components/ask/ask'
 import job from '@/components/job/job'
 import dev from '@/components/dev/dev'
 import login from '@/components/login/login'
-import topicDetail from '@/components/topicDetail/topicDetail' */
+import topicDetail from '@/components/topicDetail/topicDetail'
+import edit from '@/components/edit/edit'
+import userinfo from '@/components/userinfo/userinfo'
 
-const Home = resolve => require(['@/components/home/Home'], resolve)
-const share = resolve => require(['@/components/share/share'], resolve)
-const good = resolve => require(['@/components/good/good'], resolve)
-const ask = resolve => require(['@/components/ask/ask'], resolve)
-const job = resolve => require(['@/components/job/job'], resolve)
-const dev = resolve => require(['@/components/dev/dev'], resolve)
-const login = resolve => require(['@/components/login/login'], resolve)
-const topicDetail = resolve => require(['@/components/topicDetail/topicDetail'], resolve)
-const edit = resolve => require(['@/components/edit/edit'], resolve)
-const userinfo = resolve => require(['@/components/userinfo/userinfo'], resolve)
+// const Home = resolve => require(['@/components/home/Home'], resolve)
+// const share = resolve => require(['@/components/share/share'], resolve)
+// const good = resolve => require(['@/components/good/good'], resolve)
+// const ask = resolve => require(['@/components/ask/ask'], resolve)
+// const job = resolve => require(['@/components/job/job'], resolve)
+// const dev = resolve => require(['@/components/dev/dev'], resolve)
+// const login = resolve => require(['@/components/login/login'], resolve)
+// const topicDetail = resolve => require(['@/components/topicDetail/topicDetail'], resolve)
+// const edit = resolve => require(['@/components/edit/edit'], resolve)
+// const userinfo = resolve => require(['@/components/userinfo/userinfo'], resolve)
 
 Vue.use(Router)
 
