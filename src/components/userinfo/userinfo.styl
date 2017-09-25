@@ -1,0 +1,98 @@
+.userinfo
+	position absolute
+	top 0
+	left 0
+	bottom 0
+	width 100%
+	background #eee
+	.userinfo-head
+		position relative
+		width 100%
+		padding 10px 10px 5px 10px
+		color #fff
+		background #666
+		box-sizing border-box
+		.info
+			display table
+			width 100%
+			.info-wrapper
+				display table-cell
+				text-align center
+				vertical-align middle
+				font-size 14px
+				img
+					border-radius 50%
+				p
+					line-height 22px
+		.others
+			font-size 14px
+			line-height 26px
+			&::after
+				display block
+				content ''
+				clear both
+			.register-time
+				float left
+				font-size 12px
+			.score
+				float right
+				color #80bd01
+		.goback
+			position absolute
+			top 6px
+			left 5px	
+	.userinfo-nav
+		display flex
+		justify-content space-around
+		height 30px
+		line-height 30px
+		color #fff
+		font-size 14px
+		background #1F2D3D
+		.active
+			border-bottom 4px solid #80bd01
+	.userinfo-content
+		position absolute
+		width 100%
+		top 230px
+		bottom 0
+		overflow hidden
+		.row
+			display flex
+			width 100%
+			padding 8px 5px
+			border-bottom 1px dotted #99A9BF
+			img
+				flex 0 0 32px
+				border-radius 50%
+				margin-right 5px
+			.row-right
+				flex 1
+				width 100%
+				font-size 12px
+				line-height 16px
+				p
+					max-width 330px
+					white-space nowrap
+					text-overflow ellipsis
+					overflow hidden
+.userinfo-mask
+	position absolute
+	top 0
+	left 0
+	bottom 0
+	width 100%
+	background rgba(0, 0, 0, .3)
+	z-index 1650
+	.loading
+		display table
+		width 100%
+		height 100%
+		text-align center
+		.loading-wrapper
+			display table-cell
+			width 200px
+			height 200px
+			vertical-align middle
+			img
+				width 120px
